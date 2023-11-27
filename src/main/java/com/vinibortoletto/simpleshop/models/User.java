@@ -1,0 +1,30 @@
+package com.vinibortoletto.simpleshop.models;
+
+import com.vinibortoletto.simpleshop.enums.Role;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.io.Serial;
+import java.io.Serializable;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Table(name = "tb_user")
+public class User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
+    private String name;
+    private String email;
+    private String phone;
+    private Address address;
+    private String password;
+    private Role role;
+}
