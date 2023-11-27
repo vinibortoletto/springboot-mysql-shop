@@ -27,13 +27,15 @@ public class ProductService {
         return product.orElseThrow(() -> new NotFoundException("Product not found"));
     }
 
-    public ProductModel save(ProductModel newProduct) {
-        Optional<ProductModel> product = repository.findByName(newProduct.getName());
+    public ProductModel save(ProductDto dto) {
+        Optional<ProductModel> product = repository.findByName(dto.name());
 
         if (product.isPresent()) {
                 throw new ConflictException("Product already exists in database");
         }
 
+        ProductModel newProduct = new ProductModel();
+        BeanUtils.copyProperties(dto, newProduct);
         return repository.save(newProduct);
     }
 

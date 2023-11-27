@@ -33,12 +33,9 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<ProductModel> save(@RequestBody @Valid ProductDto dto) {
-        ProductModel product = new ProductModel();
-        BeanUtils.copyProperties(dto, product);
-
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(service.save(product));
+                .body(service.save(dto));
     }
 
     @PutMapping(value = "/{id}")
