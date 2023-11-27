@@ -1,7 +1,7 @@
 INSERT INTO `tb_product` (id, name, price, stock, image, description)
 VALUES
   (
-    "0e47fe26-5841-4355-a2b7-b36fac645e6b",
+    UUID(),
     "White Shoes",
     19.99,
     100,
@@ -9,7 +9,7 @@ VALUES
     "Introducing our Classic White Shoes – the epitome of timeless style and versatility. Crafted with precision and attention to detail, these shoes are a wardrobe essential for any fashion enthusiast. The pristine white color effortlessly complements a variety of outfits, from casual to semi-formal, making them the perfect choice for any occasion. With a comfortable fit and durable construction, our white shoes not only look good but also provide all-day comfort. Step out in confidence, embracing a clean and sophisticated look that never goes out of fashion with our Classic White Shoes."
   ),
   (
-    "598d205e-0e0f-414c-9601-87e1b97da51e",
+    UUID(),
     "Green Shoes",
     29.99,
     200,
@@ -17,7 +17,7 @@ VALUES
     "Introducing our Green Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes."
   ),
   (
-    "57bd4b27-e61f-46e3-ab85-dd4be05b41a7",
+    UUID(),
     "Yellow Shoes",
     39.99,
     300,
