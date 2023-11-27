@@ -1,13 +1,12 @@
 package com.vinibortoletto.simpleshop.repositories;
 
-import com.vinibortoletto.simpleshop.models.ProductModel;
+import com.vinibortoletto.simpleshop.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface ProductRepository extends JpaRepository<ProductModel, String> {
-    Optional<ProductModel> findByName(String name);
+public interface ProductRepository extends JpaRepository<Product, String> {
+    Optional<Product> findByName(String name);
 }

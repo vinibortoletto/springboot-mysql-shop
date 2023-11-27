@@ -6,7 +6,6 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,7 +14,7 @@ import java.util.UUID;
 @EqualsAndHashCode
 @Entity
 @Table(name = "tb_product")
-public class ProductModel implements Serializable {
+public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
