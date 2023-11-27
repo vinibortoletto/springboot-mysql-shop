@@ -22,9 +22,14 @@ public class Address implements Serializable {
     private String id;
     private String street;
     private Integer number;
+    @Column(name = "zip_code")
     private Integer zipCode;
+    private String neighborhood;
     private String city;
     private String state;
     private String country;
-    private String neighborhood;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private User customer;
 }
