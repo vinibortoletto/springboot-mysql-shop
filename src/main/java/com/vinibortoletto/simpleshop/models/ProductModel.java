@@ -1,13 +1,19 @@
 package com.vinibortoletto.simpleshop.models;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = "tb_product")
 public class ProductModel implements Serializable {
@@ -15,85 +21,23 @@ public class ProductModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-
+    private String id;
     private String name;
-
     private BigDecimal price;
     private Integer stock;
     private String image;
     private String description;
 
-    public ProductModel() {}
+    public ProductModel() {
+        this.id = String.valueOf(UUID.randomUUID());
+    }
 
-    public ProductModel(UUID id, String name, BigDecimal price, Integer stock, String image, String description) {
-        this.id = id;
+    public ProductModel(String name, BigDecimal price, Integer stock, String image, String description) {
+        this.id = String.valueOf(UUID.randomUUID());
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.image = image;
         this.description = description;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductModel that = (ProductModel) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }
