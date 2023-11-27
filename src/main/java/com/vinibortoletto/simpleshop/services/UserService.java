@@ -2,11 +2,13 @@ package com.vinibortoletto.simpleshop.services;
 
 import com.vinibortoletto.simpleshop.dtos.UserDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
+import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,5 +44,15 @@ public class UserService {
         User user = findById(id);
         BeanUtils.copyProperties(dto, user);
         return repository.save(user);
+    }
+
+    public void delete(String id) {
+        findById(id);
+
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
     }
 }
