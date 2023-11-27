@@ -20,10 +20,6 @@ public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-
-    @OneToMany(mappedBy = "customer")
-    private final List<Address> address = new ArrayList<>();
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
@@ -34,4 +30,10 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ManyToMany
+    @JoinTable(name = "tb_user_address",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<Address> addresses = new ArrayList<>();
 }

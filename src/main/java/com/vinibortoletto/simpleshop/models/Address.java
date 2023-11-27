@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,7 +34,7 @@ public class Address implements Serializable {
     private String country;
 
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
+    @ManyToMany(mappedBy = "addresses")
+    private List<User> users;
 }
+
