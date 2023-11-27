@@ -37,4 +37,10 @@ public class UserService {
         BeanUtils.copyProperties(dto, newUser);
         return repository.save(newUser);
     }
+
+    public User update(UserDto dto, String id) {
+        User user = findById(id);
+        BeanUtils.copyProperties(dto, user);
+        return repository.save(user);
+    }
 }
