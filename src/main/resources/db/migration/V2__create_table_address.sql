@@ -1,8 +1,8 @@
 CREATE TABLE tb_address (
     id VARCHAR(36) PRIMARY KEY,
     street VARCHAR(255) NOT NULL,
-    number INT NOT NULL,
-    zip_code INT NOT NULL,
+    number VARCHAR(50) NOT NULL,
+    zip_code VARCHAR(50) NOT NULL,
     neighborhood VARCHAR(255) NOT NULL,
     city VARCHAR(255) NOT NULL,
     state VARCHAR(255) NOT NULL,

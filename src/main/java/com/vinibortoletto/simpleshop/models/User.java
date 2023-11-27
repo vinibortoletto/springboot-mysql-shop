@@ -1,6 +1,5 @@
 package com.vinibortoletto.simpleshop.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,7 +20,7 @@ public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "customer")
     private final List<Address> address = new ArrayList<>();
 

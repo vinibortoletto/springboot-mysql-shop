@@ -1,5 +1,6 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,14 +22,17 @@ public class Address implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String street;
-    private Integer number;
+    private String number;
+
     @Column(name = "zip_code")
-    private Integer zipCode;
+    private String zipCode;
+
     private String neighborhood;
     private String city;
     private String state;
     private String country;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private User customer;

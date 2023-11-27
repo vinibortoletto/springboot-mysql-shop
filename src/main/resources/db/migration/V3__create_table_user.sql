@@ -2,7 +2,7 @@ CREATE TABLE tb_user (
     id VARCHAR(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    phone INT NOT NULL,
+    phone VARCHAR(50) NOT NULL,
     address VARCHAR(36) NOT NULL,
     FOREIGN KEY (address) REFERENCES tb_address(id),
     password VARCHAR(255) NOT NULL,
