@@ -1,6 +1,7 @@
 package com.vinibortoletto.simpleshop.services;
 
 import com.vinibortoletto.simpleshop.dtos.ProductDto;
+import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.ProductModel;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
@@ -26,6 +27,12 @@ public class ProductService {
     }
 
     public ProductModel save(ProductModel newProduct) {
+        Optional<ProductModel> product = repository.findByName(newProduct.getName());
+
+        if (product.isPresent()) {
+                throw new ConflictException("Product already exists in database");
+        }
+
         return repository.save(newProduct);
     }
 }
