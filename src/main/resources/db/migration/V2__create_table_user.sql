@@ -3,22 +3,19 @@ CREATE TABLE tb_user (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(50) NOT NULL,
-    address VARCHAR(36) NOT NULL,
-    FOREIGN KEY (address) REFERENCES tb_address(id),
     password VARCHAR(255) NOT NULL,
     role ENUM("ADMIN", "SELLER", "CUSTOMER") NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT INTO `tb_user` (id, name, email, phone, address, password, role)
+INSERT INTO `tb_user` (id, name, email, phone, password, role)
 VALUES
   (
     "699ad267-854f-43b3-94f1-cca894d887bc",
     "Vinicius Bortoletto",
     "ovinibortoletto@gmail.com",
     1934346762,
-    "7d2c6005-0ffb-4ac5-b835-4d712fa17da7",
     "123123",
     "ADMIN"
   ),
@@ -27,7 +24,6 @@ VALUES
     "Dalva Bortoletto",
     "davabortoletto@gmail.com",
     1934346762,
-    "7d2c6005-0ffb-4ac5-b835-4d712fa17da7",
     "123123",
     "SELLER"
   ),
@@ -36,7 +32,6 @@ VALUES
     "Pedro Bortoletto",
     "pedrobortoletto@gmail.com",
     1934346762,
-    "7d2c6005-0ffb-4ac5-b835-4d712fa17da7",
     "123123",
     "CUSTOMER"
   )

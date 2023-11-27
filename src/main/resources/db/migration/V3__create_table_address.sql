@@ -1,12 +1,12 @@
 CREATE TABLE tb_address (
-    id VARCHAR(36) PRIMARY KEY,
-    street VARCHAR(255) NOT NULL,
-    number VARCHAR(50) NOT NULL,
-    zip_code VARCHAR(50) NOT NULL,
-    neighborhood VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    state VARCHAR(255) NOT NULL,
-    country VARCHAR(255) NOT NULL,
+    id VARCHAR(255) PRIMARY KEY,
+    street VARCHAR(255),
+    number VARCHAR(255),
+    zip_code VARCHAR(255),
+    neighborhood VARCHAR(255),
+    city VARCHAR(255),
+    state VARCHAR(255),
+    country VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
