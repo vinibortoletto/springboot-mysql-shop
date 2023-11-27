@@ -13,12 +13,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<CustomException> notFound(NotFoundException exception, HttpServletRequest request) {
         HttpStatus status = HttpStatus.NOT_FOUND;
-        String error = "Not found";
 
         CustomException customException = new CustomException(
                 Instant.now(),
                 status.value(),
-                error,
+                "Not found",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(status).body(customException);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<CustomException> conflict(ConflictException exception, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        CustomException customException = new CustomException(
+                Instant.now(),
+                status.value(),
+                "Conflict",
                 exception.getMessage(),
                 request.getRequestURI()
         );
