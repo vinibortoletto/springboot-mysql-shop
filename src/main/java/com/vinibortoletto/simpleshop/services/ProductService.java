@@ -5,6 +5,7 @@ import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.ProductModel;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,11 @@ public class ProductService {
         }
 
         return repository.save(newProduct);
+    }
+
+    public ProductModel update(ProductDto dto, String id) {
+        ProductModel product = findById(id);
+        BeanUtils.copyProperties(dto, product);
+        return repository.save(product);
     }
 }

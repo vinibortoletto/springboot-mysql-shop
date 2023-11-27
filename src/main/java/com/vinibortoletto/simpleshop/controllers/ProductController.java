@@ -40,4 +40,11 @@ public class ProductController {
                 .status(HttpStatus.CREATED)
                 .body(service.save(product));
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductModel> update(@RequestBody @Valid ProductDto dto, @PathVariable String id) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(service.update(dto, id));
+    }
 }
