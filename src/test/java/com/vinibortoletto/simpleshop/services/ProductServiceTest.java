@@ -1,6 +1,7 @@
 package com.vinibortoletto.simpleshop.services;
 
 import com.github.javafaker.Faker;
+import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +16,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -60,12 +63,29 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should find and return all products in database")
+    @DisplayName("should find all products")
     void findAllCase2() {
         List<Product> expected = List.of(createFakeProduct(), createFakeProduct(), createFakeProduct());
         when(repository.findAll()).thenReturn(expected);
 
         List<Product> actual = service.findAll();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should find one product by id")
+    void findByIdCase1() {
+        Product expected = createFakeProduct();
+        when(repository.findById(expected.getId())).thenReturn(Optional.of(expected));
+        Product actual = service.findById(expected.getId());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("should throw exception if product is not found")
+    void findByIdCase2() {
+        Product expected = createFakeProduct();
+        when(repository.findById(expected.getId())).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> service.findById(expected.getId()));
     }
 }
