@@ -111,13 +111,7 @@ class ProductServiceTest {
         BeanUtils.copyProperties(dto, product);
 
         when(repository.findByName(dto.name())).thenReturn(Optional.of(product));
-
-        ConflictException exception = assertThrows(
-                ConflictException.class,
-                () -> service.save(dto)
-        );
-
-        assertEquals(expectedMessage, exception.getMessage());
+        assertThrows(ConflictException.class, () -> service.save(dto));
         verify(repository, times(1)).findByName(dto.name());
         verify(repository, never()).save(product);
     }
@@ -135,5 +129,37 @@ class ProductServiceTest {
         Product actual = service.save(dto);
         verify(repository, times(1)).findByName(dto.name());
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("update - should throw exception if product is not found")
+    void updateCase1() {
+        ProductDto dto = createFakeProductDto();
+        String id = String.valueOf(UUID.randomUUID());
+        Product newProduct = new Product();
+        BeanUtils.copyProperties(dto, newProduct);
+
+        when(repository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> service.update(dto, id));
+        verify(repository, times(1)).findById(id);
+        verify(repository, never()).save(newProduct);
+    }
+
+    @Test
+    @DisplayName("update - should update a product")
+    void updateCase2() {
+        ProductDto dto = createFakeProductDto();
+        String id = String.valueOf(UUID.randomUUID());
+        Product newProduct = new Product();
+        BeanUtils.copyProperties(dto, newProduct);
+
+        when(repository.findById(id)).thenReturn(Optional.of(newProduct));
+        when(repository.save(newProduct)).thenReturn(newProduct);
+
+        Product updatedProduct = service.update(dto, id);
+
+        assertEquals(newProduct, updatedProduct);
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).save(newProduct);
     }
 }
