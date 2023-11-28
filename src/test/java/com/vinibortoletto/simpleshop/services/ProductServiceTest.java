@@ -1,6 +1,8 @@
 package com.vinibortoletto.simpleshop.services;
 
 import com.github.javafaker.Faker;
+import com.vinibortoletto.simpleshop.dtos.ProductDto;
+import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -21,7 +24,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class ProductServiceTest {
@@ -50,6 +53,16 @@ class ProductServiceTest {
         fakeProduct.setDescription(faker.lorem().sentence());
 
         return fakeProduct;
+    }
+
+    private ProductDto createFakeProductDto() {
+        return new ProductDto(
+                faker.commerce().productName(),
+                BigDecimal.valueOf(faker.number().randomDouble(2, 1, 100)),
+                faker.number().numberBetween(1, 100),
+                faker.internet().image(),
+                faker.lorem().sentence()
+        );
     }
 
     @Test
@@ -87,5 +100,40 @@ class ProductServiceTest {
         Product expected = createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> service.findById(expected.getId()));
+    }
+
+    @Test
+    @DisplayName("should throw exception if product already exists")
+    void saveCase1() {
+        String expectedMessage = "Product already exists in database";
+        ProductDto dto = createFakeProductDto();
+        Product product = new Product();
+        BeanUtils.copyProperties(dto, product);
+
+        when(repository.findByName(dto.name())).thenReturn(Optional.of(product));
+
+        ConflictException exception = assertThrows(
+                ConflictException.class,
+                () -> service.save(dto)
+        );
+
+        assertEquals(expectedMessage, exception.getMessage());
+        verify(repository, times(1)).findByName(dto.name());
+        verify(repository, never()).save(product);
+    }
+
+    @Test
+    @DisplayName("should save a product")
+    void saveCase2() {
+        ProductDto dto = createFakeProductDto();
+        Product expected = new Product();
+        BeanUtils.copyProperties(dto, expected);
+
+        when(repository.findByName(dto.name())).thenReturn(Optional.empty());
+        when(repository.save(expected)).thenReturn(expected);
+
+        Product actual = service.save(dto);
+        verify(repository, times(1)).findByName(dto.name());
+        assertEquals(expected, actual);
     }
 }
