@@ -66,7 +66,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should return empty array")
+    @DisplayName("findAll - should return empty array")
     void findAllCase1() {
         List<Product> expected = new ArrayList<>();
         when(repository.findAll()).thenReturn(expected);
@@ -76,7 +76,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should find all products")
+    @DisplayName("findAll - should find all products")
     void findAllCase2() {
         List<Product> expected = List.of(createFakeProduct(), createFakeProduct(), createFakeProduct());
         when(repository.findAll()).thenReturn(expected);
@@ -86,7 +86,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should find one product by id")
+    @DisplayName("findById - should find one product by id")
     void findByIdCase1() {
         Product expected = createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.of(expected));
@@ -95,7 +95,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should throw exception if product is not found")
+    @DisplayName("findById - should throw exception if product is not found")
     void findByIdCase2() {
         Product expected = createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.empty());
@@ -103,7 +103,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should throw exception if product already exists")
+    @DisplayName("save - should throw exception if product already exists")
     void saveCase1() {
         String expectedMessage = "Product already exists in database";
         ProductDto dto = createFakeProductDto();
@@ -117,7 +117,7 @@ class ProductServiceTest {
     }
 
     @Test
-    @DisplayName("should save a product")
+    @DisplayName("save - should save a product")
     void saveCase2() {
         ProductDto dto = createFakeProductDto();
         Product expected = new Product();
