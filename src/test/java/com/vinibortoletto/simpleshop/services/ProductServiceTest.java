@@ -162,4 +162,30 @@ class ProductServiceTest {
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).save(newProduct);
     }
+
+    @Test
+    @DisplayName("delete - should throw exception if product is not found")
+    void deleteCase1() {
+        String id = String.valueOf(UUID.randomUUID());
+        when(repository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> service.delete(id));
+        verify(repository, times(1)).findById(id);
+        verify(repository, never()).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("delete - should delete a product")
+    void deleteCase2() {
+        String id = String.valueOf(UUID.randomUUID());
+        Product product = createFakeProduct();
+
+        when(repository.findById(id)).thenReturn(Optional.of(product));
+        doNothing().when(repository).deleteById(id);
+
+        service.delete(id);
+
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).deleteById(id);
+    }
 }
