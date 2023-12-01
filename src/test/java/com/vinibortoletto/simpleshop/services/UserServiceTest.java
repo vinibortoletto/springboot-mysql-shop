@@ -1,7 +1,9 @@
 package com.vinibortoletto.simpleshop.services;
 
 import com.github.javafaker.Faker;
+import com.vinibortoletto.simpleshop.dtos.UserDto;
 import com.vinibortoletto.simpleshop.enums.Role;
+import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -20,7 +23,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class UserServiceTest {
     private final Faker faker = new Faker();
@@ -48,6 +51,17 @@ class UserServiceTest {
         fakeUser.setRole(Role.SELLER);
 
         return fakeUser;
+    }
+
+    private UserDto createFakeUserDto() {
+        return new UserDto(
+                faker.name().fullName(),
+                faker.internet().emailAddress(),
+                faker.phoneNumber().phoneNumber(),
+                new ArrayList<>(),
+                faker.internet().password(),
+                Role.SELLER
+        );
     }
 
     @Test
@@ -85,5 +99,34 @@ class UserServiceTest {
         User expected = createFakeUser();
         when(repository.findById(expected.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> service.findById(expected.getId()));
+    }
+
+    @Test
+    @DisplayName("save - should throw exception if user already exists")
+    void saveCase1() {
+        String expectedMessage = "User already exists in database";
+        UserDto dto = createFakeUserDto();
+        User user = new User();
+        BeanUtils.copyProperties(dto, user);
+
+        when(repository.findByEmail(dto.email())).thenReturn(Optional.of(user));
+        assertThrows(ConflictException.class, () -> service.save(dto));
+        verify(repository, times(1)).findByEmail(dto.email());
+        verify(repository, never()).save(user);
+    }
+
+    @Test
+    @DisplayName("save - should save a user")
+    void saveCase2() {
+        UserDto dto = createFakeUserDto();
+        User expected = new User();
+        BeanUtils.copyProperties(dto, expected);
+
+        when(repository.findByEmail(dto.email())).thenReturn(Optional.empty());
+        when(repository.save(expected)).thenReturn(expected);
+
+        User actual = service.save(dto);
+        verify(repository, times(1)).findByEmail(dto.email());
+        assertEquals(expected, actual);
     }
 }
