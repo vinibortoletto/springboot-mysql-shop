@@ -10,8 +10,8 @@ import java.util.List;
 public record UserDto(
         @NotBlank String name,
         @NotBlank String email,
-        @NotBlank String phone,
-        @NotNull List<Address> addresses,
+        String phone,
+        List<Address> addresses,
         @NotBlank String password,
         @NotNull Role role
 ) {
