@@ -1,10 +1,9 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.github.javafaker.Faker;
 import com.vinibortoletto.simpleshop.dtos.UserDto;
-import com.vinibortoletto.simpleshop.enums.Role;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
+import com.vinibortoletto.simpleshop.fakers.UserFaker;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
-    private final Faker faker = new Faker();
+
+    private final UserFaker userFaker = new UserFaker();
 
     @Mock
     private UserRepository repository;
@@ -40,29 +40,6 @@ class UserServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    private User createFakeUser() {
-        User fakeUser = new User();
-
-        fakeUser.setId(String.valueOf(UUID.randomUUID()));
-        fakeUser.setName(faker.name().fullName());
-        fakeUser.setEmail(faker.internet().emailAddress());
-        fakeUser.setPhone(faker.phoneNumber().phoneNumber());
-        fakeUser.setPassword(faker.internet().password());
-        fakeUser.setRole(Role.SELLER);
-
-        return fakeUser;
-    }
-
-    private UserDto createFakeUserDto() {
-        return new UserDto(
-                faker.name().fullName(),
-                faker.internet().emailAddress(),
-                faker.phoneNumber().phoneNumber(),
-                new ArrayList<>(),
-                faker.internet().password(),
-                Role.SELLER
-        );
-    }
 
     @Test
     @DisplayName("findAll - should return empty array")
@@ -77,7 +54,7 @@ class UserServiceTest {
     @Test
     @DisplayName("findAll - should find all users")
     void findAllCase2() {
-        List<User> expected = List.of(createFakeUser());
+        List<User> expected = List.of(userFaker.createFakeUser());
         when(repository.findAll()).thenReturn(expected);
 
         List<User> actual = service.findAll();
@@ -87,7 +64,7 @@ class UserServiceTest {
     @Test
     @DisplayName("findById - should find one user by id")
     void findByIdCase1() {
-        User expected = createFakeUser();
+        User expected = userFaker.createFakeUser();
         when(repository.findById(expected.getId())).thenReturn(Optional.of(expected));
         User actual = service.findById(expected.getId());
         assertEquals(expected, actual);
@@ -96,7 +73,7 @@ class UserServiceTest {
     @Test
     @DisplayName("findById - should throw exception if user is not found")
     void findByIdCase2() {
-        User expected = createFakeUser();
+        User expected = userFaker.createFakeUser();
         when(repository.findById(expected.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> service.findById(expected.getId()));
     }
@@ -105,7 +82,7 @@ class UserServiceTest {
     @DisplayName("save - should throw exception if user already exists")
     void saveCase1() {
         String expectedMessage = "User already exists in database";
-        UserDto dto = createFakeUserDto();
+        UserDto dto = userFaker.createFakeUserDto();
         User user = new User();
         BeanUtils.copyProperties(dto, user);
 
@@ -118,7 +95,7 @@ class UserServiceTest {
     @Test
     @DisplayName("save - should save a user")
     void saveCase2() {
-        UserDto dto = createFakeUserDto();
+        UserDto dto = userFaker.createFakeUserDto();
         User expected = new User();
         BeanUtils.copyProperties(dto, expected);
 
@@ -133,7 +110,7 @@ class UserServiceTest {
     @Test
     @DisplayName("update - should throw exception if user is not found")
     void updateCase1() {
-        UserDto dto = createFakeUserDto();
+        UserDto dto = userFaker.createFakeUserDto();
         String id = String.valueOf(UUID.randomUUID());
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
@@ -147,7 +124,7 @@ class UserServiceTest {
     @Test
     @DisplayName("update - should update an user")
     void updateCase2() {
-        UserDto dto = createFakeUserDto();
+        UserDto dto = userFaker.createFakeUserDto();
         String id = String.valueOf(UUID.randomUUID());
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
@@ -177,7 +154,7 @@ class UserServiceTest {
     @DisplayName("delete - should delete an user")
     void deleteCase2() {
         String id = String.valueOf(UUID.randomUUID());
-        User user = createFakeUser();
+        User user = userFaker.createFakeUser();
 
         when(repository.findById(id)).thenReturn(Optional.of(user));
         doNothing().when(repository).deleteById(id);

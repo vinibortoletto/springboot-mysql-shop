@@ -1,9 +1,9 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.github.javafaker.Faker;
 import com.vinibortoletto.simpleshop.dtos.ProductDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
+import com.vinibortoletto.simpleshop.fakers.ProductFaker;
 import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,8 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class ProductServiceTest {
-    private final Faker faker = new Faker();
+
+    private final ProductFaker productFaker = new ProductFaker();
 
     @Mock
     private ProductRepository repository;
@@ -42,28 +42,6 @@ class ProductServiceTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    private Product createFakeProduct() {
-        Product fakeProduct = new Product();
-
-        fakeProduct.setId(String.valueOf(UUID.randomUUID()));
-        fakeProduct.setName(faker.commerce().productName());
-        fakeProduct.setPrice(BigDecimal.valueOf(faker.number().randomDouble(2, 1, 100)));
-        fakeProduct.setStock(faker.number().numberBetween(1, 100));
-        fakeProduct.setImage(faker.internet().image());
-        fakeProduct.setDescription(faker.lorem().sentence());
-
-        return fakeProduct;
-    }
-
-    private ProductDto createFakeProductDto() {
-        return new ProductDto(
-                faker.commerce().productName(),
-                BigDecimal.valueOf(faker.number().randomDouble(2, 1, 100)),
-                faker.number().numberBetween(1, 100),
-                faker.internet().image(),
-                faker.lorem().sentence()
-        );
-    }
 
     @Test
     @DisplayName("findAll - should return empty array")
@@ -78,7 +56,11 @@ class ProductServiceTest {
     @Test
     @DisplayName("findAll - should find all products")
     void findAllCase2() {
-        List<Product> expected = List.of(createFakeProduct(), createFakeProduct(), createFakeProduct());
+        List<Product> expected = List.of(
+                productFaker.createFakeProduct(),
+                productFaker.createFakeProduct(),
+                productFaker.createFakeProduct()
+        );
         when(repository.findAll()).thenReturn(expected);
 
         List<Product> actual = service.findAll();
@@ -88,7 +70,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("findById - should find one product by id")
     void findByIdCase1() {
-        Product expected = createFakeProduct();
+        Product expected = productFaker.createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.of(expected));
         Product actual = service.findById(expected.getId());
         assertEquals(expected, actual);
@@ -97,7 +79,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("findById - should throw exception if product is not found")
     void findByIdCase2() {
-        Product expected = createFakeProduct();
+        Product expected = productFaker.createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> service.findById(expected.getId()));
     }
@@ -106,7 +88,7 @@ class ProductServiceTest {
     @DisplayName("save - should throw exception if product already exists")
     void saveCase1() {
         String expectedMessage = "Product already exists in database";
-        ProductDto dto = createFakeProductDto();
+        ProductDto dto = productFaker.createFakeProductDto();
         Product product = new Product();
         BeanUtils.copyProperties(dto, product);
 
@@ -119,7 +101,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("save - should save a product")
     void saveCase2() {
-        ProductDto dto = createFakeProductDto();
+        ProductDto dto = productFaker.createFakeProductDto();
         Product expected = new Product();
         BeanUtils.copyProperties(dto, expected);
 
@@ -134,7 +116,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("update - should throw exception if product is not found")
     void updateCase1() {
-        ProductDto dto = createFakeProductDto();
+        ProductDto dto = productFaker.createFakeProductDto();
         String id = String.valueOf(UUID.randomUUID());
         Product newProduct = new Product();
         BeanUtils.copyProperties(dto, newProduct);
@@ -148,7 +130,7 @@ class ProductServiceTest {
     @Test
     @DisplayName("update - should update a product")
     void updateCase2() {
-        ProductDto dto = createFakeProductDto();
+        ProductDto dto = productFaker.createFakeProductDto();
         String id = String.valueOf(UUID.randomUUID());
         Product newProduct = new Product();
         BeanUtils.copyProperties(dto, newProduct);
@@ -178,7 +160,7 @@ class ProductServiceTest {
     @DisplayName("delete - should delete a product")
     void deleteCase2() {
         String id = String.valueOf(UUID.randomUUID());
-        Product product = createFakeProduct();
+        Product product = productFaker.createFakeProduct();
 
         when(repository.findById(id)).thenReturn(Optional.of(product));
         doNothing().when(repository).deleteById(id);
