@@ -129,4 +129,36 @@ class UserServiceTest {
         verify(repository, times(1)).findByEmail(dto.email());
         assertEquals(expected, actual);
     }
+
+    @Test
+    @DisplayName("update - should throw exception if user is not found")
+    void updateCase1() {
+        UserDto dto = createFakeUserDto();
+        String id = String.valueOf(UUID.randomUUID());
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
+
+        when(repository.findById(id)).thenReturn(Optional.empty());
+        assertThrows(NotFoundException.class, () -> service.update(dto, id));
+        verify(repository, times(1)).findById(id);
+        verify(repository, never()).save(newUser);
+    }
+
+    @Test
+    @DisplayName("update - should update an user")
+    void updateCase2() {
+        UserDto dto = createFakeUserDto();
+        String id = String.valueOf(UUID.randomUUID());
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
+
+        when(repository.findById(id)).thenReturn(Optional.of(newUser));
+        when(repository.save(newUser)).thenReturn(newUser);
+
+        User updatedUser = service.update(dto, id);
+
+        assertEquals(newUser, updatedUser);
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).save(newUser);
+    }
 }
