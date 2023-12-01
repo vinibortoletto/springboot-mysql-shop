@@ -1,18 +1,16 @@
 CREATE TABLE tb_product (
     id VARCHAR(36) PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    price DOUBLE NOT NULL,
     stock INT NOT NULL,
     image VARCHAR(255),
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    description TEXT
 );
 
 INSERT INTO `tb_product` (id, name, price, stock, image, description)
 VALUES
   (
-    UUID(),
+    "ceb22d57-4311-4d41-898b-8e4c690c2019",
     "White Shoes",
     19.99,
     100,

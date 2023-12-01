@@ -1,12 +1,10 @@
 CREATE TABLE tb_user (
     id VARCHAR(36) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    phone VARCHAR(50) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    role ENUM("ADMIN", "SELLER", "CUSTOMER") NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    role ENUM("ADMIN", "SELLER", "CUSTOMER") NOT NULL
 );
 
 INSERT INTO `tb_user` (id, name, email, phone, password, role)
