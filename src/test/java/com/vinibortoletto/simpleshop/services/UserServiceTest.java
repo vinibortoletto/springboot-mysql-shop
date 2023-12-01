@@ -44,7 +44,7 @@ class UserServiceTest {
         User fakeUser = new User();
 
         fakeUser.setId(String.valueOf(UUID.randomUUID()));
-        fakeUser.setName(faker.commerce().productName());
+        fakeUser.setName(faker.name().fullName());
         fakeUser.setEmail(faker.internet().emailAddress());
         fakeUser.setPhone(faker.phoneNumber().phoneNumber());
         fakeUser.setPassword(faker.internet().password());
@@ -160,5 +160,31 @@ class UserServiceTest {
         assertEquals(newUser, updatedUser);
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).save(newUser);
+    }
+
+    @Test
+    @DisplayName("delete - should throw exception if user is not found")
+    void deleteCase1() {
+        String id = String.valueOf(UUID.randomUUID());
+        when(repository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> service.delete(id));
+        verify(repository, times(1)).findById(id);
+        verify(repository, never()).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("delete - should delete an user")
+    void deleteCase2() {
+        String id = String.valueOf(UUID.randomUUID());
+        User user = createFakeUser();
+
+        when(repository.findById(id)).thenReturn(Optional.of(user));
+        doNothing().when(repository).deleteById(id);
+
+        service.delete(id);
+
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).deleteById(id);
     }
 }
