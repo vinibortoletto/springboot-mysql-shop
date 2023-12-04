@@ -18,7 +18,7 @@ VALUES
     "Introducing our Classic White Shoes – the epitome of timeless style and versatility. Crafted with precision and attention to detail, these shoes are a wardrobe essential for any fashion enthusiast. The pristine white color effortlessly complements a variety of outfits, from casual to semi-formal, making them the perfect choice for any occasion. With a comfortable fit and durable construction, our white shoes not only look good but also provide all-day comfort. Step out in confidence, embracing a clean and sophisticated look that never goes out of fashion with our Classic White Shoes."
   ),
   (
-    UUID(),
+    "3c9d07d1-f5bc-4596-aca1-4ca1e006580a",
     "Green Shoes",
     29.99,
     200,
@@ -26,7 +26,7 @@ VALUES
     "Introducing our Green Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes."
   ),
   (
-    UUID(),
+    "8a83447e-b70e-4dfd-815c-5f26f713a9e1",
     "Yellow Shoes",
     39.99,
     300,
