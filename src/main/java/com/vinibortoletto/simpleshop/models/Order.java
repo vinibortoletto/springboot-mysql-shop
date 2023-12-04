@@ -6,7 +6,9 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,5 +38,11 @@ public class Order implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "shipping_address_id")
-    private Address address;
+    private Address shippingAddress;
+
+    @ManyToMany
+    @JoinTable(name = "tb_order_product",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> products = new ArrayList<>();
 }

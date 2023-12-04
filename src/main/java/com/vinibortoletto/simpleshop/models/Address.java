@@ -38,7 +38,7 @@ public class Address implements Serializable {
     private List<User> users;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = "shippingAddress")
     private List<Order> orders;
 }
 

@@ -1,5 +1,6 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -34,4 +35,11 @@ public class Product implements Serializable {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private List<Category> categories = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "tb_order_product",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
+    private List<Order> orders = new ArrayList<>();
 }
