@@ -30,7 +30,6 @@ public class ProductController {
     @Operation(summary = "Returns a product based on its id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findById(@PathVariable String id) {
-        System.out.println(id);
         Product product = service.findById(id);
         return ResponseEntity.ok().body(product);
     }
