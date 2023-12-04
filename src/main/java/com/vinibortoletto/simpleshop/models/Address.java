@@ -36,5 +36,9 @@ public class Address implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
     private List<User> users;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "address")
+    private List<Order> orders;
 }
 

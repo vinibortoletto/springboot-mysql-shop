@@ -1,5 +1,6 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,4 +37,9 @@ public class User implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id"))
     private List<Address> addresses = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany
+    @JoinColumn(name = "customer_id")
+    private List<Order> orders = new ArrayList<>();
 }
