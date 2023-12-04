@@ -57,6 +57,7 @@ class AddressServiceTest {
 
         assertThrows(ConflictException.class, () -> addressService.save(dto, userId));
         verify(addressRepository, times(1)).findByZipcodeAndNumber(dto.zipcode(), dto.number());
+        verify(userService, times(1)).findById(userId);
         verify(addressRepository, never()).save(address);
     }
 
@@ -77,6 +78,30 @@ class AddressServiceTest {
         addressService.save(dto, userId);
 
         verify(addressRepository, times(1)).findByZipcodeAndNumber(dto.zipcode(), dto.number());
+        verify(userService, times(1)).saveUserAddress(address, userId);
+        verify(addressRepository, never()).save(address);
+    }
+
+    @Test
+    @DisplayName("save - should register user address if address does not exists")
+    void saveCase3() {
+        AddressDto dto = addressFaker.createFakeAddressDto();
+        Address address = new Address();
+        BeanUtils.copyProperties(dto, address);
+
+        String userId = String.valueOf(UUID.randomUUID());
+        User user = userFaker.createFakeUser();
+
+        when(addressRepository.findByZipcodeAndNumber(dto.zipcode(), dto.number())).thenReturn(Optional.empty());
+        when(userService.findById(userId)).thenReturn(user);
+        when(addressRepository.save(address)).thenReturn(address);
+        doNothing().when(userService).saveUserAddress(address, userId);
+
+        addressService.save(dto, userId);
+
+        verify(addressRepository, times(1)).findByZipcodeAndNumber(dto.zipcode(), dto.number());
+        verify(userService, times(1)).findById(userId);
         verify(addressRepository, times(1)).save(address);
+        verify(userService, times(1)).saveUserAddress(address, userId);
     }
 }
