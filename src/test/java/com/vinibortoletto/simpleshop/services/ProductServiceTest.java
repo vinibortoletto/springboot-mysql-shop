@@ -3,7 +3,9 @@ package com.vinibortoletto.simpleshop.services;
 import com.vinibortoletto.simpleshop.dtos.ProductDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
+import com.vinibortoletto.simpleshop.fakers.CategoryFaker;
 import com.vinibortoletto.simpleshop.fakers.ProductFaker;
+import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +31,7 @@ import static org.mockito.Mockito.*;
 class ProductServiceTest {
 
     private final ProductFaker productFaker = new ProductFaker();
+    private final CategoryFaker categoryFaker = new CategoryFaker();
 
     @Mock
     private ProductRepository repository;
@@ -36,6 +39,9 @@ class ProductServiceTest {
     @Autowired
     @InjectMocks
     private ProductService service;
+
+    @Mock
+    private CategoryService categoryService;
 
     @BeforeEach
     void setup() {
@@ -65,6 +71,24 @@ class ProductServiceTest {
 
         List<Product> actual = service.findAll();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("findAllByCategoryId - should find all products by category id")
+    void findAllByCategoryIdCase1() {
+        List<Product> products = List.of(
+                productFaker.createFakeProduct(),
+                productFaker.createFakeProduct(),
+                productFaker.createFakeProduct()
+        );
+
+        Category category = products.get(0).getCategories().get(0);
+
+        when(categoryService.findById(category.getId())).thenReturn(category);
+        when(repository.findAllByCategories_Id(category.getId())).thenReturn(products);
+
+        List<Product> foundProducts = service.findAllByCategoryId(category.getId());
+        assertEquals(products, foundProducts);
     }
 
     @Test
@@ -106,6 +130,12 @@ class ProductServiceTest {
         BeanUtils.copyProperties(dto, expected);
 
         when(repository.findByName(dto.name())).thenReturn(Optional.empty());
+
+        for (String categoryId : dto.categories()) {
+            when(categoryService.findById(categoryId)).thenReturn(new Category());
+            expected.getCategories().add(new Category());
+        }
+
         when(repository.save(expected)).thenReturn(expected);
 
         Product actual = service.save(dto);
