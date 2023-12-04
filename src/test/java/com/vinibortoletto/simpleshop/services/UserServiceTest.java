@@ -3,7 +3,9 @@ package com.vinibortoletto.simpleshop.services;
 import com.vinibortoletto.simpleshop.dtos.UserDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
+import com.vinibortoletto.simpleshop.fakers.AddressFaker;
 import com.vinibortoletto.simpleshop.fakers.UserFaker;
+import com.vinibortoletto.simpleshop.models.Address;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,6 +29,7 @@ import static org.mockito.Mockito.*;
 class UserServiceTest {
 
     private final UserFaker userFaker = new UserFaker();
+    private final AddressFaker addressFaker = new AddressFaker();
 
     @Mock
     private UserRepository repository;
@@ -163,5 +166,22 @@ class UserServiceTest {
 
         verify(repository, times(1)).findById(id);
         verify(repository, times(1)).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("saveUserAddress - should save address for user")
+    void saveUserAddressCase1() {
+        String id = String.valueOf(UUID.randomUUID());
+        User user = userFaker.createFakeUser();
+        Address address = addressFaker.createFakeAddress();
+
+        when(repository.findById(id)).thenReturn(Optional.of(user));
+        when(repository.save(user)).thenReturn(user);
+
+        service.saveUserAddress(address, id);
+
+        verify(repository, times(1)).findById(id);
+        verify(repository, times(1)).save(user);
+
     }
 }
