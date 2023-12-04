@@ -4,6 +4,7 @@ import com.vinibortoletto.simpleshop.dtos.ProductDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
+import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.repositories.ProductRepository;
 import org.springframework.beans.BeanUtils;
@@ -19,6 +20,9 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public List<Product> findAll() {
         return repository.findAll();
     }
@@ -26,6 +30,11 @@ public class ProductService {
     public Product findById(String id) {
         Optional<Product> product = repository.findById(id);
         return product.orElseThrow(() -> new NotFoundException("Product not found"));
+    }
+
+    public List<Product> findAllByCategoryId(String id) {
+        categoryService.findById(id);
+        return repository.findAllByCategories_Id(id);
     }
 
     public Product save(ProductDto dto) {
@@ -37,6 +46,12 @@ public class ProductService {
 
         Product newProduct = new Product();
         BeanUtils.copyProperties(dto, newProduct);
+
+        for (String categoryId : dto.categories()) {
+            Category category = categoryService.findById(categoryId);
+            newProduct.getCategories().add(category);
+        }
+
         return repository.save(newProduct);
     }
 

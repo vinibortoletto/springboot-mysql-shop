@@ -27,6 +27,13 @@ public class ProductController {
         return ResponseEntity.ok().body(productList);
     }
 
+    @Operation(summary = "Returns all products based on category id")
+    @GetMapping(value = "/categories/{id}")
+    public ResponseEntity<List<Product>> findAllByCategoryId(@PathVariable String id) {
+        List<Product> productList = service.findAllByCategoryId(id);
+        return ResponseEntity.ok().body(productList);
+    }
+
     @Operation(summary = "Returns a product based on its id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<Product> findById(@PathVariable String id) {
