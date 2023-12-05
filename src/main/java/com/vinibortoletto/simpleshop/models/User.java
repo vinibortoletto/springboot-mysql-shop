@@ -42,4 +42,10 @@ public class User implements Serializable {
     @OneToMany
     @JoinColumn(name = "customer_id")
     private List<Order> orders = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name = "tb_cart",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id"))
+    private List<Product> cart = new ArrayList<>();
 }
