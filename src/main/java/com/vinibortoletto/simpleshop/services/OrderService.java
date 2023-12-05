@@ -1,5 +1,6 @@
 package com.vinibortoletto.simpleshop.services;
 
+import com.vinibortoletto.simpleshop.dtos.OrderStatusDto;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Order;
 import com.vinibortoletto.simpleshop.repositories.OrderRepository;
@@ -22,5 +23,11 @@ public class OrderService {
     public Order findById(String id) {
         Optional<Order> order = orderRepository.findById(id);
         return order.orElseThrow(() -> new NotFoundException("Order not found"));
+    }
+
+    public Order updateStatus(OrderStatusDto dto) {
+        Order order = findById(dto.orderId());
+        order.setStatus(dto.orderStatus());
+        return orderRepository.save(order);
     }
 }
