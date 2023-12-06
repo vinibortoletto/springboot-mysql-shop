@@ -6,9 +6,10 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-    private BigDecimal price;
+    private Double price;
     private Integer stock;
     private String image;
     private String description;
@@ -43,10 +44,6 @@ public class Product implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orders = new ArrayList<>();
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "tb_cart",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> customers = new ArrayList<>();
+    @OneToMany(mappedBy = "id.product")
+    private Set<CartProduct> products = new HashSet<>();
 }

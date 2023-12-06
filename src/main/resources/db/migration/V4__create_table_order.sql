@@ -1,7 +1,7 @@
 CREATE TABLE tb_order (
     id VARCHAR(36) PRIMARY KEY,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    total_price DOUBLE NOT NULL,
+    total DOUBLE NOT NULL,
     status ENUM("AWAITING PAYMENT", "PREPARING", "ON ROUTE", "DELIVERED", "CANCELED"),
     customer_id VARCHAR(36) NOT NULL,
     shipping_address_id VARCHAR(36) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE tb_order (
     FOREIGN KEY (shipping_address_id) REFERENCES tb_address(id)
 );
 
-INSERT INTO tb_order (id, total_price, status, customer_id, shipping_address_id)
+INSERT INTO tb_order (id, total, status, customer_id, shipping_address_id)
 VALUES
     (
         "48bf4f11-4600-43f2-b8f8-01add38a9f4c",

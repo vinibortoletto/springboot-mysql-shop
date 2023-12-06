@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,10 +24,7 @@ public class Address implements Serializable {
     private String id;
     private String street;
     private String number;
-
-    @Column(name = "zipcode")
     private String zipcode;
-
     private String neighborhood;
     private String city;
     private String state;
@@ -35,10 +32,10 @@ public class Address implements Serializable {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
-    private List<User> users;
+    private Set<Customer> customers;
 
     @JsonIgnore
     @OneToMany(mappedBy = "shippingAddress")
-    private List<Order> orders;
+    private Set<Order> orders;
 }
 

@@ -15,4 +15,5 @@ public record UserDto(
         @NotBlank String password,
         @NotNull Role role
 ) {
+
 }

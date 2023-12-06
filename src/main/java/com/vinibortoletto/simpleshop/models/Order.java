@@ -28,8 +28,7 @@ public class Order implements Serializable {
     @Column(name = "order_date")
     private Date orderDate;
 
-    @Column(name = "total_price")
-    private Double totalPrice;
+    private Double total;
     private OrderStatus status;
 
     @ManyToOne
