@@ -1,9 +1,6 @@
 package com.vinibortoletto.simpleshop.fakers;
 
 import com.github.javafaker.Faker;
-import com.vinibortoletto.simpleshop.dtos.ProductDto;
-import com.vinibortoletto.simpleshop.models.Category;
-import com.vinibortoletto.simpleshop.models.Product;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -14,9 +11,9 @@ public class ProductFaker {
     private final Faker faker = new Faker();
     private final CategoryFaker categoryFaker = new CategoryFaker();
 
-    public Product createFakeProduct() {
-        Product fakeProduct = new Product();
-        Category category = categoryFaker.createFakeCategory();
+    public _Product createFakeProduct() {
+        _Product fakeProduct = new _Product();
+        _Category category = categoryFaker.createFakeCategory();
 
         fakeProduct.setId(String.valueOf(UUID.randomUUID()));
         fakeProduct.setName(faker.commerce().productName());

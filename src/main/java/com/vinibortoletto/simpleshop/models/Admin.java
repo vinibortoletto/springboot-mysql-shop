@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 public class Admin {
     @Id
     @OneToOne
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JoinColumn(name = "id")
-    private User user;
+    private String id;
 }
 

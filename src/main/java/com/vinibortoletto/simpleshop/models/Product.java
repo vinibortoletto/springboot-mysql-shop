@@ -1,14 +1,12 @@
 package com.vinibortoletto.simpleshop.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -26,7 +24,7 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String name;
-    private Double price;
+    private BigDecimal price;
     private Integer stock;
     private String image;
     private String description;
@@ -35,15 +33,19 @@ public class Product implements Serializable {
     @JoinTable(name = "tb_product_category",
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories = new ArrayList<>();
+    private Set<Category> categories = new HashSet<>();
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "id.product")
-    private Set<CartProduct> products = new HashSet<>();
+//    @JsonIgnore
+//    @ManyToMany
+//    @JoinTable(name = "tb_order_product",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "order_id"))
+//    private List<Order> orders = new ArrayList<>();
+//
+//    @JsonIgnore
+//    @ManyToMany
+//    @JoinTable(name = "tb_cart",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id"))
+//    private List<User> customers = new ArrayList<>();
 }

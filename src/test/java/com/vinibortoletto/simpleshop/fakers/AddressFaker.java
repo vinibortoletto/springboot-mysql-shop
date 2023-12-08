@@ -1,16 +1,14 @@
 package com.vinibortoletto.simpleshop.fakers;
 
 import com.github.javafaker.Faker;
-import com.vinibortoletto.simpleshop.dtos.AddressDto;
-import com.vinibortoletto.simpleshop.models.Address;
 
 import java.util.UUID;
 
 public class AddressFaker {
     private final Faker faker = new Faker();
 
-    public Address createFakeAddress() {
-        Address fakeAddress = new Address();
+    public _Address createFakeAddress() {
+        _Address fakeAddress = new _Address();
 
         fakeAddress.setId(String.valueOf(UUID.randomUUID()));
         fakeAddress.setStreet(faker.address().streetAddress());

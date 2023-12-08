@@ -5,7 +5,6 @@ import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.fakers.AddressFaker;
 import com.vinibortoletto.simpleshop.fakers.UserFaker;
-import com.vinibortoletto.simpleshop.models.Address;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -173,7 +172,7 @@ class UserServiceTest {
     void saveUserAddressCase1() {
         String id = String.valueOf(UUID.randomUUID());
         User user = userFaker.createFakeUser();
-        Address address = addressFaker.createFakeAddress();
+        _Address address = addressFaker.createFakeAddress();
 
         when(repository.findById(id)).thenReturn(Optional.of(user));
         when(repository.save(user)).thenReturn(user);

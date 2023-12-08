@@ -1,12 +1,9 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.AddressDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.fakers.AddressFaker;
 import com.vinibortoletto.simpleshop.fakers.UserFaker;
-import com.vinibortoletto.simpleshop.models.Address;
 import com.vinibortoletto.simpleshop.models.User;
-import com.vinibortoletto.simpleshop.repositories.AddressRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +28,7 @@ class AddressServiceTest {
 
     @Autowired
     @InjectMocks
-    private AddressService addressService;
+    private _AddressService addressService;
 
     @Mock
     private UserService userService;
@@ -45,7 +42,7 @@ class AddressServiceTest {
     @DisplayName("save - should throw exception if address was already registered by user")
     void saveCase1() {
         AddressDto dto = addressFaker.createFakeAddressDto();
-        Address address = new Address();
+        _Address address = new _Address();
         BeanUtils.copyProperties(dto, address);
 
         String userId = String.valueOf(UUID.randomUUID());
@@ -65,7 +62,7 @@ class AddressServiceTest {
     @DisplayName("save - should register user address if address exists but not for user")
     void saveCase2() {
         AddressDto dto = addressFaker.createFakeAddressDto();
-        Address address = new Address();
+        _Address address = new _Address();
         BeanUtils.copyProperties(dto, address);
 
         String userId = String.valueOf(UUID.randomUUID());
@@ -86,7 +83,7 @@ class AddressServiceTest {
     @DisplayName("save - should register user address if address does not exists")
     void saveCase3() {
         AddressDto dto = addressFaker.createFakeAddressDto();
-        Address address = new Address();
+        _Address address = new _Address();
         BeanUtils.copyProperties(dto, address);
 
         String userId = String.valueOf(UUID.randomUUID());

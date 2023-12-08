@@ -1,13 +1,9 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.ProductDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.fakers.CategoryFaker;
 import com.vinibortoletto.simpleshop.fakers.ProductFaker;
-import com.vinibortoletto.simpleshop.models.Category;
-import com.vinibortoletto.simpleshop.models.Product;
-import com.vinibortoletto.simpleshop.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,10 +34,10 @@ class ProductServiceTest {
 
     @Autowired
     @InjectMocks
-    private ProductService service;
+    private _ProductService service;
 
     @Mock
-    private CategoryService categoryService;
+    private _CategoryService categoryService;
 
     @BeforeEach
     void setup() {
@@ -52,58 +48,58 @@ class ProductServiceTest {
     @Test
     @DisplayName("findAll - should return empty array")
     void findAllCase1() {
-        List<Product> expected = new ArrayList<>();
+        List<_Product> expected = new ArrayList<>();
         when(repository.findAll()).thenReturn(expected);
 
-        List<Product> actual = service.findAll();
+        List<_Product> actual = service.findAll();
         assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("findAll - should find all products")
     void findAllCase2() {
-        List<Product> expected = List.of(
+        List<_Product> expected = List.of(
                 productFaker.createFakeProduct(),
                 productFaker.createFakeProduct(),
                 productFaker.createFakeProduct()
         );
         when(repository.findAll()).thenReturn(expected);
 
-        List<Product> actual = service.findAll();
+        List<_Product> actual = service.findAll();
         assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("findAllByCategoryId - should find all products by category id")
     void findAllByCategoryIdCase1() {
-        List<Product> products = List.of(
+        List<_Product> products = List.of(
                 productFaker.createFakeProduct(),
                 productFaker.createFakeProduct(),
                 productFaker.createFakeProduct()
         );
 
-        Category category = products.get(0).getCategories().get(0);
+        _Category category = products.get(0).getCategories().get(0);
 
         when(categoryService.findById(category.getId())).thenReturn(category);
         when(repository.findAllByCategories_Id(category.getId())).thenReturn(products);
 
-        List<Product> foundProducts = service.findAllByCategoryId(category.getId());
+        List<_Product> foundProducts = service.findAllByCategoryId(category.getId());
         assertEquals(products, foundProducts);
     }
 
     @Test
     @DisplayName("findById - should find one product by id")
     void findByIdCase1() {
-        Product expected = productFaker.createFakeProduct();
+        _Product expected = productFaker.createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.of(expected));
-        Product actual = service.findById(expected.getId());
+        _Product actual = service.findById(expected.getId());
         assertEquals(expected, actual);
     }
 
     @Test
     @DisplayName("findById - should throw exception if product is not found")
     void findByIdCase2() {
-        Product expected = productFaker.createFakeProduct();
+        _Product expected = productFaker.createFakeProduct();
         when(repository.findById(expected.getId())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> service.findById(expected.getId()));
     }
@@ -113,7 +109,7 @@ class ProductServiceTest {
     void saveCase1() {
         String expectedMessage = "Product already exists in database";
         ProductDto dto = productFaker.createFakeProductDto();
-        Product product = new Product();
+        _Product product = new _Product();
         BeanUtils.copyProperties(dto, product);
 
         when(repository.findByName(dto.name())).thenReturn(Optional.of(product));
@@ -126,19 +122,19 @@ class ProductServiceTest {
     @DisplayName("save - should save a product")
     void saveCase2() {
         ProductDto dto = productFaker.createFakeProductDto();
-        Product expected = new Product();
+        _Product expected = new _Product();
         BeanUtils.copyProperties(dto, expected);
 
         when(repository.findByName(dto.name())).thenReturn(Optional.empty());
 
         for (String categoryId : dto.categories()) {
-            when(categoryService.findById(categoryId)).thenReturn(new Category());
-            expected.getCategories().add(new Category());
+            when(categoryService.findById(categoryId)).thenReturn(new _Category());
+            expected.getCategories().add(new _Category());
         }
 
         when(repository.save(expected)).thenReturn(expected);
 
-        Product actual = service.save(dto);
+        _Product actual = service.save(dto);
         verify(repository, times(1)).findByName(dto.name());
         assertEquals(expected, actual);
     }
@@ -148,7 +144,7 @@ class ProductServiceTest {
     void updateCase1() {
         ProductDto dto = productFaker.createFakeProductDto();
         String id = String.valueOf(UUID.randomUUID());
-        Product newProduct = new Product();
+        _Product newProduct = new _Product();
         BeanUtils.copyProperties(dto, newProduct);
 
         when(repository.findById(id)).thenReturn(Optional.empty());
@@ -162,13 +158,13 @@ class ProductServiceTest {
     void updateCase2() {
         ProductDto dto = productFaker.createFakeProductDto();
         String id = String.valueOf(UUID.randomUUID());
-        Product newProduct = new Product();
+        _Product newProduct = new _Product();
         BeanUtils.copyProperties(dto, newProduct);
 
         when(repository.findById(id)).thenReturn(Optional.of(newProduct));
         when(repository.save(newProduct)).thenReturn(newProduct);
 
-        Product updatedProduct = service.update(dto, id);
+        _Product updatedProduct = service.update(dto, id);
 
         assertEquals(newProduct, updatedProduct);
         verify(repository, times(1)).findById(id);
@@ -190,7 +186,7 @@ class ProductServiceTest {
     @DisplayName("delete - should delete a product")
     void deleteCase2() {
         String id = String.valueOf(UUID.randomUUID());
-        Product product = productFaker.createFakeProduct();
+        _Product product = productFaker.createFakeProduct();
 
         when(repository.findById(id)).thenReturn(Optional.of(product));
         doNothing().when(repository).deleteById(id);

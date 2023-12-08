@@ -29,12 +29,12 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
 
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
     private Admin admin;
 
-    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
     private Seller seller;
 }
