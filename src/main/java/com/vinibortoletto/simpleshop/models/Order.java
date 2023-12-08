@@ -6,9 +6,10 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,16 +25,13 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
-    @Column(name = "order_date")
-    private Date orderDate;
-
-    private Double total;
+    private Instant moment;
+    private BigDecimal total;
     private OrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private User customer;
+    private Customer customer;
 
     @OneToOne
     @JoinColumn(name = "shipping_address_id")
@@ -43,5 +41,5 @@ public class Order implements Serializable {
     @JoinTable(name = "tb_order_product",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products = new ArrayList<>();
+    private Set<Product> products = new HashSet<>();
 }
