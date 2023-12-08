@@ -1,10 +1,13 @@
 package com.vinibortoletto.simpleshop.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_admin")
-public class Admin extends User {
+public class Admin {
+    @Id
+    @OneToOne
+    @JoinColumn(name = "id")
+    private User user;
 }
 

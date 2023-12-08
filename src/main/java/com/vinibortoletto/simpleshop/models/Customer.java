@@ -3,6 +3,7 @@ package com.vinibortoletto.simpleshop.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -12,13 +13,21 @@ import java.util.Set;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "tb_customer")
-public class Customer extends User {
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    protected Set<Address> addresses;
+public class Customer {
+    @Id
+    @OneToOne
+    @JoinColumn(name = "id")
+    private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    @ManyToMany
+    @JoinTable(
+            name = "tb_customer_address",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id")
+    )
+    private Set<Address> addresses = new HashSet<>();
+
+    @OneToOne(mappedBy = "customer")
     private Cart cart;
 }
 
