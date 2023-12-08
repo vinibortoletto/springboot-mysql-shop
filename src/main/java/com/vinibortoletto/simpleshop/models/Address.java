@@ -1,6 +1,5 @@
 package com.vinibortoletto.simpleshop.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,18 +23,19 @@ public class Address implements Serializable {
     private String id;
     private String street;
     private String number;
+
+    @Column(name = "zipcode")
     private String zipcode;
+
     private String neighborhood;
     private String city;
     private String state;
     private String country;
 
-    @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
     private Set<Customer> customers;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "shippingAddress")
-    private Set<Order> orders;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "shippingAddress")
+//    private List<Order> orders;
 }
-
