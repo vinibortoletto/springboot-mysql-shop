@@ -28,4 +28,13 @@ public class User implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    private Customer customer;
+
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    private Admin admin;
+
+    @OneToOne(cascade = CascadeType.PERSIST, mappedBy = "user")
+    private Seller seller;
 }
