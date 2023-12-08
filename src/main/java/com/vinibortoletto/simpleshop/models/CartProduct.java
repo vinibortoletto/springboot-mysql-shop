@@ -1,5 +1,6 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.vinibortoletto.simpleshop.models.pks.CartProductPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -7,6 +8,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -21,15 +23,14 @@ public class CartProduct implements Serializable {
 
     @EmbeddedId
     private CartProductPK id = new CartProductPK();
-    private Double subtotal;
     private Integer quantity;
+    private BigDecimal subtotal;
 
-    public Cart getCart() {
-        return id.getCart();
-    }
-
-    public void setCart(Cart cart) {
+    public CartProduct(Cart cart, Product product, Integer quantity, BigDecimal subtotal) {
         id.setCart(cart);
+        id.setProduct(product);
+        this.quantity = quantity;
+        this.subtotal = subtotal;
     }
 
     public Product getProduct() {
@@ -40,8 +41,15 @@ public class CartProduct implements Serializable {
         id.setProduct(product);
     }
 
-    public Double getSubtotal() {
-        return getProduct().getPrice() * getQuantity();
+    public Cart getCart() {
+        return id.getCart();
+    }
+
+    public void setCart(Cart cart) {
+        id.setCart(cart);
+    }
+
+    public BigDecimal getSubtotal() {
+        return getProduct().getPrice().multiply(BigDecimal.valueOf(getQuantity()));
     }
 }
-

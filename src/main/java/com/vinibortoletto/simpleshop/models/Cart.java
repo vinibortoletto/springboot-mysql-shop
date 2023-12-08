@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,16 +23,12 @@ public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private Double total;
+    private BigDecimal total;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @OneToMany(mappedBy = "id.cart")
     private Set<CartProduct> products = new HashSet<>();
-
-//    @JsonIgnore
-//    @OneToOne
-//    @JoinColumn(name = "user_id")
-//    private User customer;
-//
-//    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    private List<CartItem> items;
 }
