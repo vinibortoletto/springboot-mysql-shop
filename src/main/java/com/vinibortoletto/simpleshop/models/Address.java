@@ -1,11 +1,12 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,10 +33,11 @@ public class Address implements Serializable {
     private String state;
     private String country;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
-    private Set<Customer> customers;
+    private List<User> customers;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "shippingAddress")
-//    private List<Order> orders;
+    @JsonIgnore
+    @OneToMany(mappedBy = "shippingAddress")
+    private List<Order> orders;
 }

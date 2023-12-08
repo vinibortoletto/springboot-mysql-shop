@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,12 +30,9 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Customer customer;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Admin admin;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Seller seller;
+    @ManyToMany
+    @JoinTable(name = "tb_user_address",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<Address> addresses;
 }
