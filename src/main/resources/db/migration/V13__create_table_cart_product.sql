@@ -1,8 +1,8 @@
 CREATE TABLE tb_cart_product (
-    cart_id VARCHAR(36),
-    product_id VARCHAR(36),
-    quantity INT,
-    subtotal DOUBLE,
+    cart_id VARCHAR(36) NOT NULL,
+    product_id VARCHAR(36) NOT NULL,
+    quantity INT NOT NULL,
+    subtotal DECIMAL NOT NULL,
     PRIMARY KEY (cart_id, product_id),
     FOREIGN KEY (cart_id) REFERENCES tb_cart(id),
     FOREIGN KEY (product_id) REFERENCES tb_product(id)

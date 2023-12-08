@@ -1,10 +1,10 @@
 CREATE TABLE tb_product (
     id VARCHAR(36) PRIMARY KEY,
     name VARCHAR(100) NOT NULL UNIQUE,
-    price DOUBLE NOT NULL,
+    price DECIMAL NOT NULL,
     stock INT NOT NULL,
-    image VARCHAR(255),
-    description TEXT
+    image VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL
 );
 
 INSERT INTO `tb_product` (id, name, price, stock, image, description)
