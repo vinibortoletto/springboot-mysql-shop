@@ -4,6 +4,7 @@ import com.vinibortoletto.simpleshop.dtos.UserDto;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
+import com.vinibortoletto.simpleshop.models.Address;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
@@ -57,9 +58,9 @@ public class UserService {
         }
     }
 
-//    public void saveUserAddress(Address address, String userId) {
-//        User user = findById(userId);
-//        user.getAddresses().add(address);
-//        repository.save(user);
-//    }
+    public void saveUserAddress(Address address, String userId) {
+        User user = findById(userId);
+        user.getAddresses().add(address);
+        repository.save(user);
+    }
 }
