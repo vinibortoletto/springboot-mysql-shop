@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,14 @@ public class CustomerController {
     @Operation(summary = "Returns all customers")
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
-        List<User> userList = service.findAll();
-        return ResponseEntity.ok().body(userList);
+        List<User> customerList = service.findAll();
+        return ResponseEntity.ok().body(customerList);
+    }
+
+    @Operation(summary = "Returns a customer based on its id")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> findById(@PathVariable String id) {
+        User customer = service.findById(id);
+        return ResponseEntity.ok().body(customer);
     }
 }
