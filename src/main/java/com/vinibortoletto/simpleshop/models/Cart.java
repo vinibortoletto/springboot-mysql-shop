@@ -26,8 +26,8 @@ public class Cart implements Serializable {
     private BigDecimal total;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id")
+    private User customer;
 
     @OneToMany(mappedBy = "id.cart")
     private Set<CartProduct> products = new HashSet<>();

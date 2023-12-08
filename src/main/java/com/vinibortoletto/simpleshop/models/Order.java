@@ -30,8 +30,8 @@ public class Order implements Serializable {
     private OrderStatus status;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id")
+    private User customer;
 
     @OneToOne
     @JoinColumn(name = "shipping_address_id")
