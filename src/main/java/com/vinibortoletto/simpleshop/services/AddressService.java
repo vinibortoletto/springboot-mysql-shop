@@ -1,9 +1,9 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.AddressDto;
+import com.vinibortoletto.simpleshop.dtos.AddressRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.models.Address;
-import com.vinibortoletto.simpleshop.models.User;
+import com.vinibortoletto.simpleshop.models.Customer;
 import com.vinibortoletto.simpleshop.repositories.AddressRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,20 @@ public class AddressService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private UserService userService;
+    private CustomerService customerService;
 
-    public Address save(AddressDto dto, String userId) {
+    public Address save(AddressRequestDTO dto, String customerId) {
         Optional<Address> address = addressRepository.findByZipcodeAndNumber(dto.zipcode(), dto.number());
-        User user = userService.findById(userId);
+        Customer customer = customerService.findById(customerId);
 
         if (address.isPresent()) {
-            boolean userHasAddress = user.getAddresses().contains(address.get());
+            boolean customerHasAddress = customer.getAddresses().contains(address.get());
 
-            if (userHasAddress) {
-                throw new ConflictException("Address already registered by user");
+            if (customerHasAddress) {
+                throw new ConflictException("Address already registered by customer");
             }
 
-            userService.saveUserAddress(address.get(), userId);
+            customerService.saveCustomerAddress(address.get(), customerId);
             return address.get();
         }
 
@@ -39,7 +39,7 @@ public class AddressService {
         BeanUtils.copyProperties(dto, newAddress);
 
         addressRepository.save(newAddress);
-        userService.saveUserAddress(newAddress, userId);
+        customerService.saveCustomerAddress(newAddress, customerId);
 
         return newAddress;
     }
