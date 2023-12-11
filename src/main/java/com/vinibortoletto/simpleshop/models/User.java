@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Getter
@@ -15,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Table(name = "tb_user")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -26,13 +24,13 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String password;
-
-    @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
-    @JoinTable(name = "tb_user_address",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
-    private List<Address> addresses;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Customer customer;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Admin admin;
 }
