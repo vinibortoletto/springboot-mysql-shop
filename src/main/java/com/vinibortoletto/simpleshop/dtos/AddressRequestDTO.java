@@ -2,7 +2,7 @@ package com.vinibortoletto.simpleshop.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record AddressDto(
+public record AddressRequestDTO(
         @NotBlank String street,
         @NotBlank String number,
         @NotBlank String zipcode,

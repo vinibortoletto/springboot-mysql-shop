@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.AddressDto;
+import com.vinibortoletto.simpleshop.dtos.AddressRequestDTO;
 import com.vinibortoletto.simpleshop.models.Address;
 import com.vinibortoletto.simpleshop.services.AddressService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +20,7 @@ public class AddressController {
 
     @Operation(summary = "Creates a new address for user")
     @PostMapping(value = "/{userId}")
-    public ResponseEntity<Address> save(@RequestBody @Valid AddressDto dto, @PathVariable String userId) {
+    public ResponseEntity<Address> save(@RequestBody @Valid AddressRequestDTO dto, @PathVariable String userId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto, userId));
     }
 }
