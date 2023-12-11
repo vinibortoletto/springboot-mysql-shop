@@ -31,7 +31,7 @@ public class Order implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User customer;
+    private Customer customer;
 
     @OneToOne
     @JoinColumn(name = "shipping_address_id")

@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.OrderStatusDto;
+import com.vinibortoletto.simpleshop.dtos.OrderStatusRequestDTO;
 import com.vinibortoletto.simpleshop.models.Order;
 import com.vinibortoletto.simpleshop.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +33,7 @@ public class OrderController {
 
     @Operation(summary = "Updates an order status")
     @PutMapping(value = "/status")
-    public ResponseEntity<Order> updateStatus(@RequestBody @Valid OrderStatusDto dto) {
+    public ResponseEntity<Order> updateStatus(@RequestBody @Valid OrderStatusRequestDTO dto) {
         return ResponseEntity.ok().body(orderService.updateStatus(dto));
     }
 }

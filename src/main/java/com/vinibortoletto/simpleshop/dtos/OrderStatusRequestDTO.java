@@ -4,7 +4,7 @@ import com.vinibortoletto.simpleshop.enums.OrderStatus;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record OrderStatusDto(
+public record OrderStatusRequestDTO(
         @NotBlank String orderId,
         @NotNull OrderStatus orderStatus
 ) {
