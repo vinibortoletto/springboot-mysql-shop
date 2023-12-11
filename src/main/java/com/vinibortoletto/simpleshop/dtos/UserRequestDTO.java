@@ -4,12 +4,10 @@ import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record UserDto(
+public record UserRequestDTO(
         @NotBlank String name,
         @NotBlank String email,
-        String phone,
         @NotBlank String password,
         @NotNull Role role
 ) {
-
 }

@@ -1,10 +1,13 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.UserDto;
+
+import com.vinibortoletto.simpleshop.dtos.UserRequestDTO;
+import com.vinibortoletto.simpleshop.enums.Role;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
-import com.vinibortoletto.simpleshop.models.Address;
+import com.vinibortoletto.simpleshop.models.Admin;
+import com.vinibortoletto.simpleshop.models.Customer;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
@@ -18,49 +21,66 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
+
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private AdminService adminService;
+
 
     public List<User> findAll() {
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
     public User findById(String id) {
-        Optional<User> user = repository.findById(id);
-        return user.orElseThrow(() -> new NotFoundException("User not found"));
+        Optional<User> user = userRepository.findById(id);
+
+        if (user.isEmpty()) {
+            throw new NotFoundException("User not found");
+        }
+
+        return user.get();
     }
 
-    public User save(UserDto dto) {
-        Optional<User> user = repository.findByEmail(dto.email());
+    public User save(UserRequestDTO dto) {
+        Optional<User> user = userRepository.findByEmail(dto.email());
 
         if (user.isPresent()) {
-            throw new ConflictException("Email already exists in database");
+            throw new ConflictException("Email already already in use");
         }
 
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
+        User savedUser = userRepository.save(newUser);
 
-        return repository.save(newUser);
+        if (savedUser.getRole() == Role.CUSTOMER) {
+            Customer savedCustomer = customerService.save(savedUser);
+            savedUser.setCustomer(savedCustomer);
+        } else {
+            Admin savedAdmin = adminService.save(savedUser);
+            savedUser.setAdmin(savedAdmin);
+        }
+
+        return savedUser;
     }
 
-    public User update(UserDto dto, String id) {
+
+    public User update(UserRequestDTO dto, String id) {
         User user = findById(id);
         BeanUtils.copyProperties(dto, user);
-        return repository.save(user);
+        return userRepository.save(user);
     }
 
     public void delete(String id) {
         findById(id);
 
         try {
-            repository.deleteById(id);
+            userRepository.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new DatabaseException(e.getMessage());
         }
-    }
-
-    public void saveUserAddress(Address address, String userId) {
-        User user = findById(userId);
-        user.getAddresses().add(address);
-        repository.save(user);
     }
 }

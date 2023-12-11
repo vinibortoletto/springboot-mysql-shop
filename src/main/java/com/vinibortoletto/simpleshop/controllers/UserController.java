@@ -1,6 +1,7 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.UserDto;
+import com.vinibortoletto.simpleshop.dtos.UserRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.UserResponseDTO;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,38 +19,48 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserController {
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @Operation(summary = "Returns all users")
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> userList = service.findAll();
-        return ResponseEntity.ok().body(userList);
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
+        List<User> userList = userService.findAll();
+        List<UserResponseDTO> response = UserResponseDTO.convert(userList);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Returns a user based on its id")
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable String id) {
-        User user = service.findById(id);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
+        User user = userService.findById(id);
+        UserResponseDTO response = new UserResponseDTO(user);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Creates a new user")
     @PostMapping
-    public ResponseEntity<User> save(@RequestBody @Valid UserDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
+    public ResponseEntity<UserResponseDTO> save(@RequestBody @Valid UserRequestDTO dto) {
+        User user = userService.save(dto);
+        UserResponseDTO response = new UserResponseDTO(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @Operation(summary = "Updates a user based on its id")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> update(@RequestBody @Valid UserDto dto, @PathVariable String id) {
-        return ResponseEntity.ok().body(service.update(dto, id));
+    public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO dto, @PathVariable String id) {
+        User user = userService.update(dto, id);
+        UserResponseDTO response = new UserResponseDTO(user);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Deletes a user based on its id")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        service.delete(id);
+    public ResponseEntity<UserResponseDTO> delete(@PathVariable String id) {
+        userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
