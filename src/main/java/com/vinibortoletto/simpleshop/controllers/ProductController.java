@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.ProductDto;
+import com.vinibortoletto.simpleshop.dtos.ProductRequestDTO;
 import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.services.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,13 +43,13 @@ public class ProductController {
 
     @Operation(summary = "Creates a new product")
     @PostMapping()
-    public ResponseEntity<Product> save(@RequestBody @Valid ProductDto dto) {
+    public ResponseEntity<Product> save(@RequestBody @Valid ProductRequestDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.save(dto));
     }
 
     @Operation(summary = "Updates a product based on its id")
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Product> update(@RequestBody @Valid ProductDto dto, @PathVariable String id) {
+    public ResponseEntity<Product> update(@RequestBody @Valid ProductRequestDTO dto, @PathVariable String id) {
         return ResponseEntity.ok().body(service.update(dto, id));
     }
 

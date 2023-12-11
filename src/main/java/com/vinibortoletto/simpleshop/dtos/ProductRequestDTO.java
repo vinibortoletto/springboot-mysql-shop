@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record ProductDto(
+public record ProductRequestDTO(
         @NotBlank String name,
         @NotNull BigDecimal price,
         @NotNull Integer stock,
