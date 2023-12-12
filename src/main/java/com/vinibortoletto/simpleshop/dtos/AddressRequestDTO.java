@@ -9,6 +9,7 @@ public record AddressRequestDTO(
         @NotBlank String neighborhood,
         @NotBlank String city,
         @NotBlank String state,
-        @NotBlank String country
+        @NotBlank String country,
+        @NotBlank String customerId
 ) {
 }
