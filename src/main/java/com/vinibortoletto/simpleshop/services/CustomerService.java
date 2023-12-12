@@ -42,9 +42,8 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public void saveCustomerAddress(Address address, String userId) {
-        Customer user = findById(userId);
-        user.getAddresses().add(address);
-        customerRepository.save(user);
+    public void saveCustomerAddress(Address address, Customer customer) {
+        customer.getAddresses().add(address);
+        customerRepository.save(customer);
     }
 }
