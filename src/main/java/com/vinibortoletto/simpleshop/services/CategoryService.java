@@ -1,8 +1,11 @@
 package com.vinibortoletto.simpleshop.services;
 
+import com.vinibortoletto.simpleshop.dtos.CategoryRequestDTO;
+import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.repositories.CategoryRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +25,17 @@ public class CategoryService {
     public Category findById(String id) {
         Optional<Category> category = categoryRepository.findById(id);
         return category.orElseThrow(() -> new NotFoundException("Category not found"));
+    }
+
+    public Category save(CategoryRequestDTO dto) {
+        Optional<Category> category = categoryRepository.findByName(dto.name());
+
+        if (category.isPresent()) {
+            throw new ConflictException("Category already exists");
+        }
+
+        Category newCategory = new Category();
+        BeanUtils.copyProperties(dto, newCategory);
+        return categoryRepository.save(newCategory);
     }
 }
