@@ -59,7 +59,7 @@ public class UserController {
 
     @Operation(summary = "Deletes a user based on its id")
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> delete(@PathVariable String id) {
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         userService.delete(id);
         return ResponseEntity.noContent().build();
     }
