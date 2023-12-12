@@ -20,18 +20,18 @@ public class AddressService {
     @Autowired
     private CustomerService customerService;
 
-    public Address save(AddressRequestDTO dto, String customerId) {
+    public Address save(AddressRequestDTO dto) {
         Optional<Address> address = addressRepository.findByZipcodeAndNumber(dto.zipcode(), dto.number());
-        Customer customer = customerService.findById(customerId);
 
         if (address.isPresent()) {
+            Customer customer = customerService.findById(dto.customerId());
             boolean customerHasAddress = customer.getAddresses().contains(address.get());
 
             if (customerHasAddress) {
                 throw new ConflictException("Address already registered by customer");
             }
 
-            customerService.saveCustomerAddress(address.get(), customerId);
+            customerService.saveCustomerAddress(address.get(), dto.customerId());
             return address.get();
         }
 
@@ -39,7 +39,7 @@ public class AddressService {
         BeanUtils.copyProperties(dto, newAddress);
 
         addressRepository.save(newAddress);
-        customerService.saveCustomerAddress(newAddress, customerId);
+        customerService.saveCustomerAddress(newAddress, dto.customerId());
 
         return newAddress;
     }
