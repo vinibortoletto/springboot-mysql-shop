@@ -52,4 +52,5 @@ public class CartProduct implements Serializable {
     public BigDecimal getSubtotal() {
         return getProduct().getPrice().multiply(BigDecimal.valueOf(getQuantity()));
     }
+
 }
