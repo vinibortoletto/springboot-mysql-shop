@@ -1,7 +1,6 @@
 package com.vinibortoletto.simpleshop.dtos;
 
 import com.vinibortoletto.simpleshop.models.Cart;
-import com.vinibortoletto.simpleshop.models.CartProduct;
 
 import java.util.List;
 import java.util.Set;
@@ -9,13 +8,13 @@ import java.util.Set;
 public record CartResponseDTO(
         String id,
         String customerId,
-        Set<CartProduct> products
+        List<CartProductResponseDTO> products
 ) {
     public CartResponseDTO(Cart cart) {
         this(
                 cart.getId(),
                 cart.getCustomer().getId(),
-                cart.getProducts()
+                CartProductResponseDTO.convert(cart.getProducts())
         );
     }
 
