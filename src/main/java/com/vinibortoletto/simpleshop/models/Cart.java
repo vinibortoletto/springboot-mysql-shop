@@ -7,8 +7,8 @@ import lombok.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,11 +26,22 @@ public class Cart implements Serializable {
     private String id;
     private BigDecimal total;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "id.cart")
-    private Set<CartProduct> products = new HashSet<>();
+    private List<CartProduct> products = new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @JsonIgnore
     private Customer customer;
+
+    public BigDecimal getTotal() {
+        BigDecimal total = BigDecimal.valueOf(0.0);
+
+        for (CartProduct cartProduct : products) {
+            total = total.add(cartProduct.getSubtotal());
+        }
+
+        return total;
+    }
 }
