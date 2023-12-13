@@ -7,8 +7,10 @@ import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Admin;
+import com.vinibortoletto.simpleshop.models.Cart;
 import com.vinibortoletto.simpleshop.models.Customer;
 import com.vinibortoletto.simpleshop.models.User;
+import com.vinibortoletto.simpleshop.repositories.CustomerRepository;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,12 @@ public class UserService {
     private CustomerService customerService;
 
     @Autowired
+    private CartService cartService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private AdminService adminService;
 
 
@@ -45,6 +53,19 @@ public class UserService {
         return user.get();
     }
 
+    public Customer saveCustomer(User user) {
+        Customer customer = new Customer();
+
+        customer.setUser(user);
+        customer.setName(user.getName());
+        customer.setEmail(user.getEmail());
+
+        Cart cart = cartService.save(customer);
+        customer.setCart(cart);
+
+        return customerRepository.save(customer);
+    }
+
     public User save(UserRequestDTO dto) {
         Optional<User> user = userRepository.findByEmail(dto.email());
 
@@ -57,7 +78,7 @@ public class UserService {
         User savedUser = userRepository.save(newUser);
 
         if (savedUser.getRole() == Role.CUSTOMER) {
-            Customer savedCustomer = customerService.save(savedUser);
+            Customer savedCustomer = saveCustomer(savedUser);
             savedUser.setCustomer(savedCustomer);
         } else {
             Admin savedAdmin = adminService.save(savedUser);
