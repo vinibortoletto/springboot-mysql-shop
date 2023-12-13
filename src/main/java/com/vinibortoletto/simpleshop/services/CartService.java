@@ -1,16 +1,17 @@
 package com.vinibortoletto.simpleshop.services;
 
+import com.vinibortoletto.simpleshop.dtos.CartProductRequestDTO;
 import com.vinibortoletto.simpleshop.dtos.CartRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Cart;
 import com.vinibortoletto.simpleshop.models.CartProduct;
 import com.vinibortoletto.simpleshop.models.Customer;
+import com.vinibortoletto.simpleshop.models.Product;
 import com.vinibortoletto.simpleshop.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -22,9 +23,14 @@ public class CartService {
     @Autowired
     private CustomerService customerService;
 
+    @Autowired
+    private CartProductService cartProductService;
+
+    @Autowired
+    private ProductService productService;
+
     public Cart save(Customer customer) {
         Cart cart = new Cart();
-        cart.setTotal(BigDecimal.valueOf(0.0));
         cart.setCustomer(customer);
         return cartRepository.save(cart);
     }
@@ -38,6 +44,8 @@ public class CartService {
         if (!Objects.equals(cart.getCustomer().getId(), customer.getId())) {
             throw new ConflictException("Cart does not belong to customer");
         }
+
+//        customer.equals(cart.getCustomer())
     }
 
     public Cart addProductToCart(CartRequestDTO dto) {
@@ -46,9 +54,21 @@ public class CartService {
 
         validateCustomerCart(customer, cart);
 
-        for (CartProduct cartProduct : dto.cartProductSet()) {
+
+        for (CartProductRequestDTO cartProductRequestDTO : dto.products()) {
+            CartProduct cartProduct = new CartProduct();
+            Product product = productService.findById(cartProductRequestDTO.id());
+
+            cartProduct.setCart(cart);
+            cartProduct.setProduct(product);
+            cartProduct.setQuantity(cartProductRequestDTO.quantity());
+            cartProduct.setSubtotal(cartProduct.getSubtotal());
+            cartProductService.save(cartProduct);
+
             cart.getProducts().add(cartProduct);
         }
+
+        cart.setTotal(cart.getTotal());
 
         return cartRepository.save(cart);
     }
