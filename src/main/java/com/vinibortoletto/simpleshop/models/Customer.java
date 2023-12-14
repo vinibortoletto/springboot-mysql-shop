@@ -1,7 +1,6 @@
 package com.vinibortoletto.simpleshop.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,7 +24,6 @@ public class Customer implements Serializable {
     private String id;
     private String name;
     private String email;
-    private Role role;
 
     @OneToOne
     @MapsId

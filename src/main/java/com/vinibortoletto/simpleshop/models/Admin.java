@@ -1,6 +1,5 @@
 package com.vinibortoletto.simpleshop.models;
 
-import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,8 +22,6 @@ public class Admin implements Serializable {
     private String id;
     private String name;
     private String email;
-    private String password;
-    private Role role;
 
     @OneToOne
     @MapsId
