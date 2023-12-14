@@ -7,7 +7,6 @@ import java.util.Set;
 
 public record CartRequestDTO(
         @NotBlank String customerId,
-        @NotBlank String cartId,
         @NotEmpty Set<CartProductRequestDTO> products
 ) {
 }

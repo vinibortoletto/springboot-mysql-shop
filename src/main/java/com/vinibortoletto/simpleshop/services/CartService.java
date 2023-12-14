@@ -48,9 +48,9 @@ public class CartService {
 //        customer.equals(cart.getCustomer())
     }
 
-    public Cart update(CartRequestDTO dto) {
+    public Cart update(CartRequestDTO dto, String cartId) {
         Customer customer = customerService.findById(dto.customerId());
-        Cart cart = findById(dto.cartId());
+        Cart cart = findById(cartId);
 
         validateCustomerCart(customer, cart);
 
