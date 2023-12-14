@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +23,13 @@ public class CartController {
     private CartService cartService;
 
     @Operation(summary = "Add product to cart")
-    @PostMapping(value = "/products")
-    public ResponseEntity<CartResponseDTO> addProductToCart(
+    @PutMapping
+    public ResponseEntity<CartResponseDTO> update(
             @RequestBody @Valid CartRequestDTO dto
     ) {
-        Cart cart = cartService.addProductToCart(dto);
+        Cart cart = cartService.update(dto);
         CartResponseDTO response = new CartResponseDTO(cart);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

@@ -48,7 +48,7 @@ public class CartService {
 //        customer.equals(cart.getCustomer())
     }
 
-    public Cart addProductToCart(CartRequestDTO dto) {
+    public Cart update(CartRequestDTO dto) {
         Customer customer = customerService.findById(dto.customerId());
         Cart cart = findById(dto.cartId());
 
