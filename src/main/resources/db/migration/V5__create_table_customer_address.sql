@@ -1,15 +1,15 @@
-CREATE TABLE tb_user_address (
-    user_id VARCHAR(36),
+CREATE TABLE tb_customer_address (
+    customer_id VARCHAR(36),
     address_id VARCHAR(36),
-    PRIMARY KEY (user_id, address_id),
-    FOREIGN KEY (user_id) REFERENCES tb_user(id),
+    PRIMARY KEY (customer_id, address_id),
+    FOREIGN KEY (customer_id) REFERENCES tb_customer(id),
     FOREIGN KEY (address_id) REFERENCES tb_address(id)
 );
 
-INSERT INTO `tb_user_address` (user_id, address_id)
+INSERT INTO `tb_customer_address` (customer_id, address_id)
 VALUES
   (
-    "1c1ffd91-d9f9-4327-9c94-bd3e84644cd6",
+    "ca5cc4c9-0e04-4b8c-a3be-6e9f2e050148",
     "48b93991-f44d-4d2e-b724-2d2cf6d75869"
   ),
   (

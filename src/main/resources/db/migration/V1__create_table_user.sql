@@ -9,6 +9,5 @@ CREATE TABLE tb_user (
 INSERT INTO tb_user (id, name, email, password, role)
 VALUES
     ('1c1ffd91-d9f9-4327-9c94-bd3e84644cd6', 'Admin User', 'admin@example.com', 'admin_password', 'ADMIN'),
-    ('ca5cc4c9-0e04-4b8c-a3be-6e9f2e050148', 'Seller User', 'seller@example.com', 'seller_password', 'CUSTOMER'),
-    ('5fef16b9-fc9b-4878-b09a-48efe4652933', 'Customer User', 'customer@example.com', 'customer_password', 'CUSTOMER');
-
+    ('ca5cc4c9-0e04-4b8c-a3be-6e9f2e050148', 'Customer 1 User', 'customer1@example.com', 'customer_password', 'CUSTOMER'),
+    ('5fef16b9-fc9b-4878-b09a-48efe4652933', 'Customer 2 User', 'customer2@example.com', 'customer_password', 'CUSTOMER');
