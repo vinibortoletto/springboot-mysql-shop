@@ -1,5 +1,6 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinibortoletto.simpleshop.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -8,8 +9,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,17 +30,17 @@ public class Order implements Serializable {
     private BigDecimal total;
     private OrderStatus status;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Customer customer;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 
-    @ManyToMany
-    @JoinTable(name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.order")
+    private List<OrderProduct> products = new ArrayList<>();
 }

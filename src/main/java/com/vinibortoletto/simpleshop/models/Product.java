@@ -40,13 +40,10 @@ public class Product implements Serializable {
     private List<Category> categories = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "id.product")
+    private Set<CartProduct> cartProductSet = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "id.product")
-    private Set<CartProduct> products = new HashSet<>();
+    private List<OrderProduct> orderProductList = new ArrayList<>();
 }
