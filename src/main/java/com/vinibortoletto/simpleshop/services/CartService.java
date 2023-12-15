@@ -40,6 +40,12 @@ public class CartService {
         return cart.orElseThrow(() -> new NotFoundException("Cart not found"));
     }
 
+
+    public Cart findByCustomerId(String customerId) {
+        Optional<Cart> cart = cartRepository.findByCustomerId(customerId);
+        return cart.orElseThrow(() -> new NotFoundException("Cart not found"));
+    }
+
     public void validateCustomerCart(Customer customer, Cart cart) {
         if (!Objects.equals(cart.getCustomer().getId(), customer.getId())) {
             throw new ConflictException("Cart does not belong to customer");
