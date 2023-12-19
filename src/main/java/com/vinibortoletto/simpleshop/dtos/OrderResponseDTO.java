@@ -2,24 +2,26 @@ package com.vinibortoletto.simpleshop.dtos;
 
 import com.vinibortoletto.simpleshop.enums.OrderStatus;
 import com.vinibortoletto.simpleshop.models.Order;
+import com.vinibortoletto.simpleshop.utils.CustomDateTimeFormatter;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.List;
 
 public record OrderResponseDTO(
         String id,
-        Instant moment,
+        String moment,
         BigDecimal total,
         OrderStatus status,
         String customerId,
         String shippingAddressId,
         List<OrderProductResponseDTO> products
 ) {
+
+
     public OrderResponseDTO(Order order) {
         this(
                 order.getId(),
-                order.getMoment(),
+                CustomDateTimeFormatter.formatDateTime(order.getMoment()),
                 order.getTotal(),
                 order.getStatus(),
                 order.getCustomer().getId(),
