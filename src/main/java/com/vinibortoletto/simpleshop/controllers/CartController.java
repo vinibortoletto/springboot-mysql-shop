@@ -1,7 +1,7 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.CartRequestDTO;
-import com.vinibortoletto.simpleshop.dtos.CartResponseDTO;
+import com.vinibortoletto.simpleshop.dtos.cart.CartRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.cart.CartResponseDTO;
 import com.vinibortoletto.simpleshop.models.Cart;
 import com.vinibortoletto.simpleshop.services.CartService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +26,7 @@ public class CartController {
     public ResponseEntity<List<CartResponseDTO>> findAll() {
         List<Cart> cartList = cartService.findAll();
         List<CartResponseDTO> response = CartResponseDTO.convert(cartList);
-        
+
         return ResponseEntity.ok().body(response);
     }
 

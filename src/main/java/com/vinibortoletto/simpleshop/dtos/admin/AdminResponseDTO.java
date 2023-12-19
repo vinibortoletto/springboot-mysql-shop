@@ -1,4 +1,4 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.admin;
 
 import com.vinibortoletto.simpleshop.models.Admin;
 

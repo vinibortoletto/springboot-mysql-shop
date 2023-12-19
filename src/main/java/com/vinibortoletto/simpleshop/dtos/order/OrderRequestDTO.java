@@ -1,4 +1,4 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.order;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

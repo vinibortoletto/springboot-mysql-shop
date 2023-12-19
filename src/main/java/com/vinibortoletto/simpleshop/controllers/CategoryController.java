@@ -1,7 +1,7 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.CategoryRequestDTO;
-import com.vinibortoletto.simpleshop.dtos.CategoryResponseDTO;
+import com.vinibortoletto.simpleshop.dtos.category.CategoryRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.category.CategoryResponseDTO;
 import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;

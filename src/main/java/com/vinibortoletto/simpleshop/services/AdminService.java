@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.AdminRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.admin.AdminRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Admin;

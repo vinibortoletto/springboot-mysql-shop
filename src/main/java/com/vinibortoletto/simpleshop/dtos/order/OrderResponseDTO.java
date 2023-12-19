@@ -1,5 +1,6 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.order;
 
+import com.vinibortoletto.simpleshop.dtos.orderProduct.OrderProductResponseDTO;
 import com.vinibortoletto.simpleshop.enums.OrderStatus;
 import com.vinibortoletto.simpleshop.models.Order;
 import com.vinibortoletto.simpleshop.utils.CustomDateTimeFormatter;

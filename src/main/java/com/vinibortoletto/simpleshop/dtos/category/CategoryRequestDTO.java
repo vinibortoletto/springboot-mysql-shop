@@ -1,4 +1,4 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.category;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,7 +1,7 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.OrderRequestDTO;
-import com.vinibortoletto.simpleshop.dtos.OrderStatusRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.order.OrderRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.order.OrderStatusRequestDTO;
 import com.vinibortoletto.simpleshop.enums.OrderStatus;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.*;

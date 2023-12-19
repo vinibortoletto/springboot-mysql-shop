@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.AddressRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.address.AddressRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Address;

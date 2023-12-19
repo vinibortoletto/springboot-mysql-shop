@@ -1,4 +1,4 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.cartProduct;
 
 import com.vinibortoletto.simpleshop.models.CartProduct;
 import com.vinibortoletto.simpleshop.models.Product;

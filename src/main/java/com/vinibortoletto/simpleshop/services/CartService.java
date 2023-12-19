@@ -1,7 +1,7 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.CartProductRequestDTO;
-import com.vinibortoletto.simpleshop.dtos.CartRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.cart.CartRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.cartProduct.CartProductRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.models.Cart;

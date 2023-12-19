@@ -1,8 +1,8 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.admin;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record CustomerRequestDTO(
+public record AdminRequestDTO(
         @NotBlank String name,
         @NotBlank String email
 ) {

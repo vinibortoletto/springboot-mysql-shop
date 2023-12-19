@@ -1,4 +1,4 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.user;
 
 import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.validation.constraints.NotBlank;

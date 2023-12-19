@@ -1,5 +1,6 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.cart;
 
+import com.vinibortoletto.simpleshop.dtos.cartProduct.CartProductRequestDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 

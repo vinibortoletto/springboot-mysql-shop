@@ -1,8 +1,8 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.OrderRequestDTO;
-import com.vinibortoletto.simpleshop.dtos.OrderResponseDTO;
-import com.vinibortoletto.simpleshop.dtos.OrderStatusRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.order.OrderRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.order.OrderResponseDTO;
+import com.vinibortoletto.simpleshop.dtos.order.OrderStatusRequestDTO;
 import com.vinibortoletto.simpleshop.models.Order;
 import com.vinibortoletto.simpleshop.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;

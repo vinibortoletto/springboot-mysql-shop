@@ -1,7 +1,7 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.AddressRequestDTO;
-import com.vinibortoletto.simpleshop.dtos.AddressResponseDTO;
+import com.vinibortoletto.simpleshop.dtos.address.AddressRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.address.AddressResponseDTO;
 import com.vinibortoletto.simpleshop.models.Address;
 import com.vinibortoletto.simpleshop.services.AddressService;
 import io.swagger.v3.oas.annotations.Operation;

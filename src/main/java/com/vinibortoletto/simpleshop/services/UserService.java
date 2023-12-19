@@ -1,7 +1,7 @@
 package com.vinibortoletto.simpleshop.services;
 
 
-import com.vinibortoletto.simpleshop.dtos.UserRequestDTO;
+import com.vinibortoletto.simpleshop.dtos.user.UserRequestDTO;
 import com.vinibortoletto.simpleshop.enums.Role;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;

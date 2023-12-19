@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.controllers;
 
-import com.vinibortoletto.simpleshop.dtos.CustomerResponseDTO;
+import com.vinibortoletto.simpleshop.dtos.customer.CustomerResponseDTO;
 import com.vinibortoletto.simpleshop.models.Customer;
 import com.vinibortoletto.simpleshop.services.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;

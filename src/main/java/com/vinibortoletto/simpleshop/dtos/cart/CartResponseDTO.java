@@ -1,5 +1,6 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.cart;
 
+import com.vinibortoletto.simpleshop.dtos.cartProduct.CartProductResponseDTO;
 import com.vinibortoletto.simpleshop.models.Cart;
 
 import java.math.BigDecimal;
