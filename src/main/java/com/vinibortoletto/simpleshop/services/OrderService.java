@@ -25,8 +25,16 @@ public class OrderService {
     @Autowired
     private AddressService addressService;
 
+    @Autowired
+    private CustomerService customerService;
+
     public List<Order> findAll() {
         return orderRepository.findAll();
+    }
+
+    public List<Order> findAllByCustomerId(String customerId) {
+        customerService.findById(customerId);
+        return orderRepository.findAllByCustomerId(customerId);
     }
 
     public Order findById(String id) {

@@ -24,8 +24,20 @@ public class OrderController {
 
     @Operation(summary = "Finds all orders")
     @GetMapping()
-    public ResponseEntity<List<Order>> findAll() {
-        return ResponseEntity.ok().body(orderService.findAll());
+    public ResponseEntity<List<OrderResponseDTO>> findAll() {
+        List<Order> orderList = orderService.findAll();
+        List<OrderResponseDTO> response = OrderResponseDTO.convert(orderList);
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @Operation(summary = "Find all orders by customer id")
+    @GetMapping(value = "/customer/{customerId}")
+    public ResponseEntity<List<OrderResponseDTO>> findAllByCustomerId() {
+        List<Order> orderList = orderService.findAll();
+        List<OrderResponseDTO> response = OrderResponseDTO.convert(orderList);
+
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Finds an order by id")
