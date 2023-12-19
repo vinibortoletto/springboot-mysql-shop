@@ -4,7 +4,6 @@ import com.vinibortoletto.simpleshop.models.Cart;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Set;
 
 public record CartResponseDTO(
         String id,
@@ -21,7 +20,7 @@ public record CartResponseDTO(
         );
     }
 
-    public static List<CartResponseDTO> convert(Set<Cart> carts) {
+    public static List<CartResponseDTO> convert(List<Cart> carts) {
         return carts.stream().map(CartResponseDTO::new).toList();
     }
 }

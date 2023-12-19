@@ -12,6 +12,7 @@ import com.vinibortoletto.simpleshop.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,6 +34,11 @@ public class CartService {
         Cart cart = new Cart();
         cart.setCustomer(customer);
         return cartRepository.save(cart);
+    }
+
+
+    public List<Cart> findAll() {
+        return cartRepository.findAll();
     }
 
     public Cart findById(String cartId) {
