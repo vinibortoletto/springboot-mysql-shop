@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -53,11 +52,9 @@ public class CartService {
     }
 
     public void validateCustomerCart(Customer customer, Cart cart) {
-        if (!Objects.equals(cart.getCustomer().getId(), customer.getId())) {
+        if (!customer.equals(cart.getCustomer())) {
             throw new ConflictException("Cart does not belong to customer");
         }
-
-//        customer.equals(cart.getCustomer())
     }
 
     public Cart update(CartRequestDTO dto, String cartId) {
