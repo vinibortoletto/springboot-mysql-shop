@@ -62,6 +62,7 @@ public class OrderService {
             order.getProducts().add(orderProduct);
         }
 
+        cartService.delete(cart.getId());
         return orderRepository.save(order);
     }
 }

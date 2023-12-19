@@ -78,4 +78,9 @@ public class CartService {
 
         return cartRepository.save(cart);
     }
+
+    public void delete(String cartId) {
+        Cart cart = findById(cartId);
+        cartRepository.delete(cart);
+    }
 }
