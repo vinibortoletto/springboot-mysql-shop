@@ -8,6 +8,7 @@ import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.security.TokenService;
 import com.vinibortoletto.simpleshop.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,66 +24,71 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
-  @Autowired
-  private AuthenticationManager authenticationManager;
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-  @Autowired
-  private UserService userService;
+    @Autowired
+    private UserService userService;
 
-  @Autowired
-  private TokenService tokenService;
+    @Autowired
+    private TokenService tokenService;
 
-  @Operation(summary = "Returns all users")
-  @GetMapping
-  public ResponseEntity<List<UserResponseDTO>> findAll() {
-    List<User> userList = userService.findAll();
-    List<UserResponseDTO> response = UserResponseDTO.convert(userList);
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(summary = "Returns all users")
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> findAll() {
+        List<User> userList = userService.findAll();
+        List<UserResponseDTO> response = UserResponseDTO.convert(userList);
 
-    return ResponseEntity.ok().body(response);
-  }
+        return ResponseEntity.ok().body(response);
+    }
 
-  @Operation(summary = "Returns a user based on its id")
-  @GetMapping(value = "/{id}")
-  public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
-    User user = userService.findById(id);
-    UserResponseDTO response = new UserResponseDTO(user);
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(summary = "Returns a user based on its id")
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
+        User user = userService.findById(id);
+        UserResponseDTO response = new UserResponseDTO(user);
 
-    return ResponseEntity.ok().body(response);
-  }
+        return ResponseEntity.ok().body(response);
+    }
 
-  @Operation(summary = "Creates a new user")
-  @PostMapping
-  public ResponseEntity<UserResponseDTO> save(@RequestBody @Valid UserRequestDTO dto) {
-    User user = userService.save(dto);
-    UserResponseDTO response = new UserResponseDTO(user);
+    @Operation(summary = "Creates a new user")
+    @PostMapping
+    public ResponseEntity<UserResponseDTO> save(@RequestBody @Valid UserRequestDTO dto) {
+        User user = userService.save(dto);
+        UserResponseDTO response = new UserResponseDTO(user);
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
-  }
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
 
-  @Operation(summary = "Updates a user based on its id")
-  @PutMapping(value = "/{id}")
-  public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO dto, @PathVariable String id) {
-    User user = userService.update(dto, id);
-    UserResponseDTO response = new UserResponseDTO(user);
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(summary = "Updates a user based on its id")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO dto, @PathVariable String id) {
+        User user = userService.update(dto, id);
+        UserResponseDTO response = new UserResponseDTO(user);
 
-    return ResponseEntity.ok().body(response);
-  }
+        return ResponseEntity.ok().body(response);
+    }
 
-  @Operation(summary = "Deletes a user based on its id")
-  @DeleteMapping(value = "/{id}")
-  public ResponseEntity<Void> delete(@PathVariable String id) {
-    userService.delete(id);
-    return ResponseEntity.noContent().build();
-  }
+    @SecurityRequirement(name = "Bearer Authentication")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Operation(summary = "Deletes a user based on its id")
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
-  @Operation(summary = "Validate user login")
-  @PostMapping("/login")
-  public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody @Valid AuthenticationRequestDTO dto) {
-    var usernamePassword = new UsernamePasswordAuthenticationToken(dto.email(), dto.password());
-    var auth = authenticationManager.authenticate(usernamePassword);
-    String token = tokenService.generateToken((User) auth.getPrincipal());
-    AuthenticationResponseDTO response = new AuthenticationResponseDTO(token);
+    @Operation(summary = "Validate user login")
+    @PostMapping("/login")
+    public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody @Valid AuthenticationRequestDTO dto) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(dto.email(), dto.password());
+        var auth = authenticationManager.authenticate(usernamePassword);
+        String token = tokenService.generateToken((User) auth.getPrincipal());
+        AuthenticationResponseDTO response = new AuthenticationResponseDTO(token);
 
-    return ResponseEntity.ok().body(response);
-  }
+        return ResponseEntity.ok().body(response);
+    }
 }

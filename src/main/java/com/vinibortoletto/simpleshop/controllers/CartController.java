@@ -5,6 +5,7 @@ import com.vinibortoletto.simpleshop.dtos.cart.CartResponseDTO;
 import com.vinibortoletto.simpleshop.models.Cart;
 import com.vinibortoletto.simpleshop.services.CartService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "carts")
 @RestController
 @RequestMapping(value = "/carts")
@@ -33,7 +35,7 @@ public class CartController {
     @Operation(summary = "Add product to cart")
     @PutMapping(value = "/{cartId}")
     public ResponseEntity<CartResponseDTO> update(
-            @RequestBody @Valid CartRequestDTO dto, @PathVariable String cartId
+        @RequestBody @Valid CartRequestDTO dto, @PathVariable String cartId
     ) {
         Cart cart = cartService.update(dto, cartId);
         CartResponseDTO response = new CartResponseDTO(cart);

@@ -6,6 +6,7 @@ import com.vinibortoletto.simpleshop.dtos.order.OrderStatusRequestDTO;
 import com.vinibortoletto.simpleshop.models.Order;
 import com.vinibortoletto.simpleshop.services.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "orders")
 @RestController
 @RequestMapping(value = "orders")
