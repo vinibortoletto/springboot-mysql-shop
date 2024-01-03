@@ -24,95 +24,87 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-  @Autowired
-  private UserRepository userRepository;
+    @Autowired
+    CustomerService customerService;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private CustomerRepository customerRepository;
+    @Autowired
+    private AdminService adminService;
 
 
-  @Autowired
-  private CustomerService customerService;
-
-  @Autowired
-  private CartService cartService;
-
-  @Autowired
-  private CustomerRepository customerRepository;
-
-  @Autowired
-  private AdminService adminService;
-
-
-  public List<User> findAll() {
-    return userRepository.findAll();
-  }
-
-  public User findById(String id) {
-    Optional<User> user = userRepository.findById(id);
-
-    if (user.isEmpty()) {
-      throw new NotFoundException("User not found");
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
-    return user.get();
-  }
-
-  public User findByEmail(String email) {
-    Optional<User> user = userRepository.findByEmail(email);
-    return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
-  }
-
-  public Customer saveCustomer(User user) {
-    Customer customer = new Customer();
-
-    customer.setUser(user);
-    customer.setName(user.getName());
-    customer.setEmail(user.getEmail());
-
-    Cart cart = cartService.save(customer);
-    customer.setCart(cart);
-
-    return customerRepository.save(customer);
-  }
-
-  public User save(UserRequestDTO dto) {
-    Optional<User> user = userRepository.findByEmail(dto.email());
-
-    if (user.isPresent()) {
-      throw new ConflictException("Email already already in use");
+    public User findById(String id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElseThrow(() -> new NotFoundException("User not found"));
     }
 
-    User newUser = new User();
-    BeanUtils.copyProperties(dto, newUser);
-
-    String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
-    newUser.setPassword(encryptedPassword);
-
-    User savedUser = userRepository.save(newUser);
-
-    if (savedUser.getRole() == Role.CUSTOMER) {
-      Customer savedCustomer = saveCustomer(savedUser);
-      savedUser.setCustomer(savedCustomer);
-    } else {
-      Admin savedAdmin = adminService.save(savedUser);
-      savedUser.setAdmin(savedAdmin);
+    public User findByEmail(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    return savedUser;
-  }
+    public Customer saveCustomer(User user) {
+        Customer customer = new Customer();
 
+        customer.setUser(user);
+        customer.setName(user.getName());
+        customer.setEmail(user.getEmail());
 
-  public User update(UserRequestDTO dto, String id) {
-    User user = findById(id);
-    BeanUtils.copyProperties(dto, user);
-    return userRepository.save(user);
-  }
+        Cart cart = cartService.save(customer);
+        customer.setCart(cart);
 
-  public void delete(String id) {
-    findById(id);
-
-    try {
-      userRepository.deleteById(id);
-    } catch (DataIntegrityViolationException e) {
-      throw new DatabaseException(e.getMessage());
+        return customerRepository.save(customer);
     }
-  }
+
+    public User save(UserRequestDTO dto) {
+
+        Optional<User> user = userRepository.findByEmail(dto.email());
+
+        if (user.isPresent()) {
+            throw new ConflictException("Email already already in use");
+        }
+
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
+        newUser.setPassword(encryptedPassword);
+
+        User savedUser = userRepository.save(newUser);
+
+        if (savedUser.getRole() == Role.CUSTOMER) {
+            Customer savedCustomer = saveCustomer(savedUser);
+            savedUser.setCustomer(savedCustomer);
+        } else {
+            Admin savedAdmin = adminService.save(savedUser);
+            savedUser.setAdmin(savedAdmin);
+        }
+
+        return savedUser;
+    }
+
+
+    public User update(UserRequestDTO dto, String id) {
+        User user = findById(id);
+        BeanUtils.copyProperties(dto, user);
+        return userRepository.save(user);
+    }
+
+    public void delete(String id) {
+        findById(id);
+
+        try {
+            userRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage());
+        }
+    }
 }
