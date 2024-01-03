@@ -58,44 +58,44 @@ class UserServiceTest {
     @Test
     @DisplayName("findAll - should return empty array")
     void findAllCase1() {
-        List<User> expected = new ArrayList<>();
-        when(userRepository.findAll()).thenReturn(expected);
+        List<User> userList = new ArrayList<>();
+        when(userRepository.findAll()).thenReturn(userList);
 
-        List<User> actual = userService.findAll();
-        assertEquals(expected, actual);
+        List<User> foundUserList = userService.findAll();
+        assertEquals(userList, foundUserList);
     }
 
     @Test
     @DisplayName("findAll - should find all users")
     void findAllCase2() {
-        List<User> expected = List.of(
+        List<User> userList = List.of(
             userFaker.createFakeUser(Role.CUSTOMER),
             userFaker.createFakeUser(Role.ADMIN)
         );
 
-        when(userRepository.findAll()).thenReturn(expected);
+        when(userRepository.findAll()).thenReturn(userList);
 
-        List<User> actual = userService.findAll();
-        assertEquals(expected, actual);
+        List<User> foundUserList = userService.findAll();
+        assertEquals(userList, foundUserList);
     }
 
     @Test
     @DisplayName("findById - should find one user by id")
     void findByIdCase1() {
-        User expected = userFaker.createFakeUser(Role.CUSTOMER);
-        when(userRepository.findById(expected.getId())).thenReturn(Optional.of(expected));
+        User user = userFaker.createFakeUser(Role.CUSTOMER);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
-        User actual = userService.findById(expected.getId());
-        assertEquals(expected, actual);
+        User foundUser = userService.findById(user.getId());
+        assertEquals(user, foundUser);
     }
 
     @Test
     @DisplayName("findById - should throw exception if user is not found")
     void findByIdCase2() {
-        User expected = userFaker.createFakeUser(Role.CUSTOMER);
-        when(userRepository.findById(expected.getId())).thenReturn(Optional.empty());
+        User user = userFaker.createFakeUser(Role.CUSTOMER);
+        when(userRepository.findById(user.getId())).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> userService.findById(expected.getId()));
+        assertThrows(NotFoundException.class, () -> userService.findById(user.getId()));
     }
 
     @Test
