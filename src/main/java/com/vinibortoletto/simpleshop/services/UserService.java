@@ -26,13 +26,16 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     CustomerService customerService;
+
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private CartService cartService;
+
     @Autowired
     private CustomerRepository customerRepository;
+
     @Autowired
     private AdminService adminService;
 
@@ -90,7 +93,6 @@ public class UserService {
 
         return savedUser;
     }
-
 
     public User update(UserRequestDTO dto, String id) {
         User user = findById(id);
