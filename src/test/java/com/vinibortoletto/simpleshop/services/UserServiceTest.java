@@ -39,6 +39,9 @@ class UserServiceTest {
     @Mock
     private CustomerRepository customerRepository;
 
+    @Mock
+    private AdminService adminService;
+
     @InjectMocks
     private UserService userService;
 
@@ -110,6 +113,26 @@ class UserServiceTest {
     @DisplayName("save - should save a customer")
     void saveCase2() {
         UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
+        newUser.setPassword(encryptedPassword);
+
+        when(userRepository.findByEmail(dto.email())).thenReturn(Optional.empty());
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+
+        User savedUser = userService.save(dto);
+
+        verify(userRepository, times(1)).findByEmail(dto.email());
+        verify(userRepository, times(1)).save(any(User.class));
+        assertEquals(newUser, savedUser);
+    }
+
+    @Test
+    @DisplayName("save - should save an admin")
+    void saveCase3() {
+        UserRequestDTO dto = userFaker.createFakeUserDto(Role.ADMIN);
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
 
