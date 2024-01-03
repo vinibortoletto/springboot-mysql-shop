@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -149,37 +150,38 @@ class UserServiceTest {
         assertEquals(newUser, savedUser);
     }
 
-//    @Test
-//    @DisplayName("update - should throw exception if user is not found")
-//    void updateCase1() {
-//        UserDto dto = userFaker.createFakeUserDto();
-//        String id = String.valueOf(UUID.randomUUID());
-//        User newUser = new User();
-//        BeanUtils.copyProperties(dto, newUser);
-//
-//        when(userRepository.findById(id)).thenReturn(Optional.empty());
-//        assertThrows(NotFoundException.class, () -> userService.update(dto, id));
-//        verify(userRepository, times(1)).findById(id);
-//        verify(userRepository, never()).save(newUser);
-//    }
-//
-//    @Test
-//    @DisplayName("update - should update an user")
-//    void updateCase2() {
-//        UserDto dto = userFaker.createFakeUserDto();
-//        String id = String.valueOf(UUID.randomUUID());
-//        User newUser = new User();
-//        BeanUtils.copyProperties(dto, newUser);
-//
-//        when(userRepository.findById(id)).thenReturn(Optional.of(newUser));
-//        when(userRepository.save(newUser)).thenReturn(newUser);
-//
-//        User updatedUser = userService.update(dto, id);
-//
-//        assertEquals(newUser, updatedUser);
-//        verify(userRepository, times(1)).findById(id);
-//        verify(userRepository, times(1)).save(newUser);
-//    }
+    @Test
+    @DisplayName("update - should throw exception if user is not found")
+    void updateCase1() {
+        UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        String id = String.valueOf(UUID.randomUUID());
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
+
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> userService.update(dto, id));
+        verify(userRepository, times(1)).findById(id);
+        verify(userRepository, never()).save(newUser);
+    }
+
+    @Test
+    @DisplayName("update - should update an user")
+    void updateCase2() {
+        UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        String id = String.valueOf(UUID.randomUUID());
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(newUser));
+        when(userRepository.save(newUser)).thenReturn(newUser);
+
+        User updatedUser = userService.update(dto, id);
+
+        assertEquals(newUser, updatedUser);
+        verify(userRepository, times(1)).findById(id);
+        verify(userRepository, times(1)).save(newUser);
+    }
 //
 //    @Test
 //    @DisplayName("delete - should throw exception if user is not found")
