@@ -5,8 +5,8 @@ import com.vinibortoletto.simpleshop.enums.Role;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.fakers.AddressFaker;
+import com.vinibortoletto.simpleshop.fakers.CartFaker;
 import com.vinibortoletto.simpleshop.fakers.UserFaker;
-import com.vinibortoletto.simpleshop.models.Cart;
 import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.repositories.CustomerRepository;
 import com.vinibortoletto.simpleshop.repositories.UserRepository;
@@ -17,13 +17,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -33,6 +31,7 @@ class UserServiceTest {
 
     private final UserFaker userFaker = new UserFaker();
     private final AddressFaker addressFaker = new AddressFaker();
+    private final CartFaker cartFaker = new CartFaker();
 
     @Mock
     private UserRepository userRepository;
@@ -40,12 +39,10 @@ class UserServiceTest {
     @Mock
     private CustomerRepository customerRepository;
 
-    @Autowired
     @InjectMocks
     private UserService userService;
 
-    @Autowired
-    @InjectMocks
+    @Mock
     private CartService cartService;
 
     @BeforeEach
@@ -113,33 +110,22 @@ class UserServiceTest {
     @DisplayName("save - should save a customer")
     void saveCase2() {
         UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
-        User expected = new User();
-        BeanUtils.copyProperties(dto, expected);
-        Cart cart = cartFaker.createFakeCart();
+        User newUser = new User();
+        BeanUtils.copyProperties(dto, newUser);
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(dto.password());
-        expected.setPassword(encryptedPassword);
+        newUser.setPassword(encryptedPassword);
 
         when(userRepository.findByEmail(dto.email())).thenReturn(Optional.empty());
-//        when(userRepository.save(expected)).thenReturn(expected);
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
 
-        when(userRepository.save(any())).thenAnswer(invocation -> {
-            User savedUser = invocation.getArgument(0);
-            savedUser.setId(String.valueOf(UUID.randomUUID()));
-            savedUser.setRole(Role.CUSTOMER);
-            return savedUser;
-        });
-
-        when(cartService.save(any())).thenReturn()
-
-
-        User actual = userService.save(dto);
+        User savedUser = userService.save(dto);
 
         verify(userRepository, times(1)).findByEmail(dto.email());
-        verify(userRepository, times(1)).save(expected);
-        assertEquals(expected, actual);
+        verify(userRepository, times(1)).save(any(User.class));
+        assertEquals(newUser, savedUser);
     }
-//
+
 //    @Test
 //    @DisplayName("update - should throw exception if user is not found")
 //    void updateCase1() {
