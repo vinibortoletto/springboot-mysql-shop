@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
@@ -95,6 +96,25 @@ class UserServiceTest {
         when(userRepository.findById(expected.getId())).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class, () -> userService.findById(expected.getId()));
+    }
+
+    @Test
+    @DisplayName("findByEmail - should find one user by email")
+    void findByEmailCase1() {
+        User user = userFaker.createFakeUser(Role.CUSTOMER);
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
+
+        User foundUser = userService.findByEmail(user.getEmail());
+        assertEquals(user, foundUser);
+    }
+
+    @Test
+    @DisplayName("findByEmail - should throw exception if user is not found")
+    void findByEmailCase2() {
+        User user = userFaker.createFakeUser(Role.CUSTOMER);
+        when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.empty());
+
+        assertThrows(UsernameNotFoundException.class, () -> userService.findByEmail(user.getEmail()));
     }
 
     @Test
