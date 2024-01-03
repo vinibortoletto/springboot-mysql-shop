@@ -1,13 +1,15 @@
 package com.vinibortoletto.simpleshop.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinibortoletto.simpleshop.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -16,8 +18,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 @Table(name = "tb_user")
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -26,26 +29,53 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
-    private String phone;
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany
-    @JoinTable(name = "tb_user_address",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
-    private List<Address> addresses = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Customer customer;
 
-    @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "customer_id")
-    private List<Order> orders = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Admin admin;
 
-    @ManyToMany
-    @JoinTable(name = "tb_cart",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> cart = new ArrayList<>();
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.role == Role.ADMIN) {
+            return List.of(
+                new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_CUSTOMER")
+            );
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+        }
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -1,6 +1,6 @@
 package com.vinibortoletto.simpleshop.services;
 
-import com.vinibortoletto.simpleshop.dtos.ProductDto;
+import com.vinibortoletto.simpleshop.dtos.product.ProductRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
@@ -37,7 +37,7 @@ public class ProductService {
         return repository.findAllByCategories_Id(id);
     }
 
-    public Product save(ProductDto dto) {
+    public Product save(ProductRequestDTO dto) {
         Optional<Product> product = repository.findByName(dto.name());
 
         if (product.isPresent()) {
@@ -55,7 +55,7 @@ public class ProductService {
         return repository.save(newProduct);
     }
 
-    public Product update(ProductDto dto, String id) {
+    public Product update(ProductRequestDTO dto, String id) {
         Product product = findById(id);
         BeanUtils.copyProperties(dto, product);
         return repository.save(product);

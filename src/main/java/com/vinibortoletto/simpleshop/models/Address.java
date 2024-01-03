@@ -35,10 +35,9 @@ public class Address implements Serializable {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "addresses")
-    private List<User> users;
+    private List<Customer> customers;
 
     @JsonIgnore
     @OneToMany(mappedBy = "shippingAddress")
     private List<Order> orders;
 }
-

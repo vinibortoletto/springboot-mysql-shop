@@ -8,7 +8,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +30,7 @@ public class Product implements Serializable {
     private BigDecimal price;
     private Integer stock;
     private String image;
+    @Column(length = 1000)
     private String description;
 
     @ManyToMany
@@ -37,16 +40,10 @@ public class Product implements Serializable {
     private List<Category> categories = new ArrayList<>();
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "order_id"))
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "id.product")
+    private Set<CartProduct> cartProductSet = new HashSet<>();
 
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "tb_cart",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<User> customers = new ArrayList<>();
+    @OneToMany(mappedBy = "id.product")
+    private List<OrderProduct> orderProductList = new ArrayList<>();
 }

@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,5 +26,5 @@ public class Category implements Serializable {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "categories")
-    private List<Product> products;
+    private Set<Product> products;
 }

@@ -1,17 +1,12 @@
-package com.vinibortoletto.simpleshop.dtos;
+package com.vinibortoletto.simpleshop.dtos.user;
 
 import com.vinibortoletto.simpleshop.enums.Role;
-import com.vinibortoletto.simpleshop.models.Address;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
-
-public record UserDto(
+public record UserRequestDTO(
         @NotBlank String name,
         @NotBlank String email,
-        String phone,
-        List<Address> addresses,
         @NotBlank String password,
         @NotNull Role role
 ) {

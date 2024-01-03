@@ -1,13 +1,15 @@
 package com.vinibortoletto.simpleshop.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vinibortoletto.simpleshop.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -24,25 +26,21 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
-    @Column(name = "order_date")
-    private Date orderDate;
-
-    @Column(name = "total_price")
-    private Double totalPrice;
+    private Instant moment;
+    private BigDecimal total;
     private OrderStatus status;
 
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private User customer;
+    @JoinColumn(name = "user_id")
+    private Customer customer;
 
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "shipping_address_id")
     private Address shippingAddress;
 
-    @ManyToMany
-    @JoinTable(name = "tb_order_product",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "id.order")
+    private List<OrderProduct> products = new ArrayList<>();
 }

@@ -1,13 +1,11 @@
 CREATE TABLE tb_cart (
-    user_id VARCHAR(36),
-    product_id VARCHAR(36),
-    quantity INT,
-    PRIMARY KEY (user_id, product_id),
-    FOREIGN KEY (user_id) REFERENCES tb_user(id),
-    FOREIGN KEY (product_id) REFERENCES tb_product(id)
+    id VARCHAR(36) PRIMARY KEY,
+    total DECIMAL NOT NULL,
+    customer_id VARCHAR(36) NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES tb_customer(id)
 );
 
-INSERT INTO tb_cart (user_id, product_id, quantity)
+INSERT INTO tb_cart (id, total, customer_id)
 VALUES
-    ("699ad267-854f-43b3-94f1-cca894d887bc", "ceb22d57-4311-4d41-898b-8e4c690c2019", 3),
-    ("699ad267-854f-43b3-94f1-cca894d887bc", "3c9d07d1-f5bc-4596-aca1-4ca1e006580a", 5);
+    ("cdd4ffcf-ef8e-4a24-9e3d-e333e159b7f2", 129.95, "5fef16b9-fc9b-4878-b09a-48efe4652933"),
+    ("50e54531-2ee8-4554-ae76-231cceac3311", 129.95, "ca5cc4c9-0e04-4b8c-a3be-6e9f2e050148");
