@@ -22,7 +22,7 @@ public class UserFaker {
         return fakeUser;
     }
 
-    public UserRequestDTO createFakeUserDto(Role role) {
+    public UserRequestDTO createFakeUserRequestDTO(Role role) {
         return new UserRequestDTO(
             faker.name().fullName(),
             faker.internet().emailAddress(),

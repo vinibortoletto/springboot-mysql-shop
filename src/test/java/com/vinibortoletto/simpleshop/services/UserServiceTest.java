@@ -100,7 +100,7 @@ class UserServiceTest {
     @Test
     @DisplayName("save - should throw exception if user already exists")
     void saveCase1() {
-        UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        UserRequestDTO dto = userFaker.createFakeUserRequestDTO(Role.CUSTOMER);
         User user = new User();
         BeanUtils.copyProperties(dto, user);
 
@@ -113,7 +113,7 @@ class UserServiceTest {
     @Test
     @DisplayName("save - should save a customer")
     void saveCase2() {
-        UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        UserRequestDTO dto = userFaker.createFakeUserRequestDTO(Role.CUSTOMER);
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
 
@@ -133,7 +133,7 @@ class UserServiceTest {
     @Test
     @DisplayName("save - should save an admin")
     void saveCase3() {
-        UserRequestDTO dto = userFaker.createFakeUserDto(Role.ADMIN);
+        UserRequestDTO dto = userFaker.createFakeUserRequestDTO(Role.ADMIN);
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
 
@@ -153,7 +153,7 @@ class UserServiceTest {
     @Test
     @DisplayName("update - should throw exception if user is not found")
     void updateCase1() {
-        UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        UserRequestDTO dto = userFaker.createFakeUserRequestDTO(Role.CUSTOMER);
         String id = String.valueOf(UUID.randomUUID());
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
@@ -168,7 +168,7 @@ class UserServiceTest {
     @Test
     @DisplayName("update - should update an user")
     void updateCase2() {
-        UserRequestDTO dto = userFaker.createFakeUserDto(Role.CUSTOMER);
+        UserRequestDTO dto = userFaker.createFakeUserRequestDTO(Role.CUSTOMER);
         String id = String.valueOf(UUID.randomUUID());
         User newUser = new User();
         BeanUtils.copyProperties(dto, newUser);
