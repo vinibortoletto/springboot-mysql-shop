@@ -182,47 +182,30 @@ class UserServiceTest {
         verify(userRepository, times(1)).findById(id);
         verify(userRepository, times(1)).save(newUser);
     }
-//
-//    @Test
-//    @DisplayName("delete - should throw exception if user is not found")
-//    void deleteCase1() {
-//        String id = String.valueOf(UUID.randomUUID());
-//        when(userRepository.findById(id)).thenReturn(Optional.empty());
-//
-//        assertThrows(NotFoundException.class, () -> userService.delete(id));
-//        verify(userRepository, times(1)).findById(id);
-//        verify(userRepository, never()).deleteById(id);
-//    }
-//
-//    @Test
-//    @DisplayName("delete - should delete an user")
-//    void deleteCase2() {
-//        String id = String.valueOf(UUID.randomUUID());
-//        User user = userFaker.createFakeUser();
-//
-//        when(userRepository.findById(id)).thenReturn(Optional.of(user));
-//        doNothing().when(userRepository).deleteById(id);
-//
-//        userService.delete(id);
-//
-//        verify(userRepository, times(1)).findById(id);
-//        verify(userRepository, times(1)).deleteById(id);
-//    }
-//
-//    @Test
-//    @DisplayName("saveUserAddress - should save address for user")
-//    void saveUserAddressCase1() {
-//        String id = String.valueOf(UUID.randomUUID());
-//        User user = userFaker.createFakeUser();
-//        _Address address = addressFaker.createFakeAddress();
-//
-//        when(userRepository.findById(id)).thenReturn(Optional.of(user));
-//        when(userRepository.save(user)).thenReturn(user);
-//
-//        userService.saveUserAddress(address, id);
-//
-//        verify(userRepository, times(1)).findById(id);
-//        verify(userRepository, times(1)).save(user);
-//
-//    }
+
+    @Test
+    @DisplayName("delete - should throw exception if user is not found")
+    void deleteCase1() {
+        String id = String.valueOf(UUID.randomUUID());
+        when(userRepository.findById(id)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> userService.delete(id));
+        verify(userRepository, times(1)).findById(id);
+        verify(userRepository, never()).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("delete - should delete an user")
+    void deleteCase2() {
+        String id = String.valueOf(UUID.randomUUID());
+        User user = userFaker.createFakeUser(Role.CUSTOMER);
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        doNothing().when(userRepository).deleteById(id);
+
+        userService.delete(id);
+
+        verify(userRepository, times(1)).findById(id);
+        verify(userRepository, times(1)).deleteById(id);
+    }
 }
