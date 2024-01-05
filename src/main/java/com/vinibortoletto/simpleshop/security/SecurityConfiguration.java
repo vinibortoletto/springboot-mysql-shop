@@ -1,7 +1,6 @@
 package com.vinibortoletto.simpleshop.security;
 
 import com.vinibortoletto.simpleshop.enums.Role;
-import com.vinibortoletto.simpleshop.repositories.UserRepository;
 import com.vinibortoletto.simpleshop.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,13 +30,27 @@ public class SecurityConfiguration {
         new AntPathRequestMatcher("/v2/api-docs"),
         new AntPathRequestMatcher("/v3/api-docs/**"),
         new AntPathRequestMatcher("/users/login", HttpMethod.POST.name()),
-        new AntPathRequestMatcher("/users", HttpMethod.POST.name())
+        new AntPathRequestMatcher("/users", HttpMethod.POST.name()),
+    };
+
+    private static final RequestMatcher[] ADMIN_LIST = {
+        new AntPathRequestMatcher("/users", HttpMethod.GET.name()),
+    };
+
+    private static final RequestMatcher[] ADMIN_CUSTOMER_LIST = {
+        new AntPathRequestMatcher("/users/{id}", HttpMethod.GET.name()),
+        new AntPathRequestMatcher("/users/{id}", HttpMethod.PUT.name()),
+        new AntPathRequestMatcher("/users/{id}", HttpMethod.DELETE.name()),
+
+        new AntPathRequestMatcher("/addresses/**", HttpMethod.GET.name()),
+        new AntPathRequestMatcher("/addresses", HttpMethod.POST.name()),
+        new AntPathRequestMatcher("/addresses/{addressId}", HttpMethod.PUT.name()),
+
     };
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private UserService userService;
+
     @Autowired
     private SecurityFilter securityFilter;
 
@@ -48,7 +61,11 @@ public class SecurityConfiguration {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(WHITE_LIST).permitAll()
-                .requestMatchers(new AntPathRequestMatcher("/users", HttpMethod.GET.name())).hasRole(Role.ADMIN.getRole())
+                .requestMatchers(ADMIN_LIST).hasRole(Role.ADMIN.getRole())
+                .requestMatchers(ADMIN_CUSTOMER_LIST).hasAnyRole(
+                    Role.ADMIN.getRole(),
+                    Role.CUSTOMER.getRole()
+                )
                 .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
