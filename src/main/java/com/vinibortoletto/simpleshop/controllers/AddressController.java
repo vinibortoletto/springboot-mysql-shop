@@ -29,7 +29,7 @@ public class AddressController {
         List<Address> addressList = addressService.findAll();
         List<AddressResponseDTO> response = AddressResponseDTO.convert(addressList);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Returns an address based on its id")
@@ -38,7 +38,7 @@ public class AddressController {
         Address address = addressService.findById(addressId);
         AddressResponseDTO response = new AddressResponseDTO(address);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Creates a new address for user")
