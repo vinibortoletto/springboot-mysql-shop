@@ -1,10 +1,13 @@
 package com.vinibortoletto.simpleshop.fakers;
 
 import com.github.javafaker.Faker;
+import com.vinibortoletto.simpleshop.dtos.product.ProductRequestDTO;
 import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.models.Product;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class ProductFaker {
@@ -26,16 +29,16 @@ public class ProductFaker {
         return fakeProduct;
     }
 
-//    public ProductDto createFakeProductDto() {
-//        List<String> categories = Arrays.asList(String.valueOf(UUID.randomUUID()), String.valueOf(UUID.randomUUID()));
-//
-//        return new ProductDto(
-//                faker.commerce().productName(),
-//                BigDecimal.valueOf(faker.number().randomDouble(2, 1, 100)),
-//                faker.number().numberBetween(1, 100),
-//                faker.internet().image(),
-//                faker.lorem().sentence(),
-//                categories
-//        );
-//    }
+    public ProductRequestDTO createFakeProductRequestDTO() {
+        List<String> categories = Arrays.asList(String.valueOf(UUID.randomUUID()), String.valueOf(UUID.randomUUID()));
+
+        return new ProductRequestDTO(
+            faker.commerce().productName(),
+            BigDecimal.valueOf(faker.number().randomDouble(2, 1, 100)),
+            faker.number().numberBetween(1, 100),
+            faker.internet().image(),
+            faker.lorem().sentence(),
+            categories
+        );
+    }
 }
