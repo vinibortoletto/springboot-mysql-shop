@@ -50,6 +50,15 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @Operation(summary = "Update category")
+    @PutMapping(value = "/{categoryId}")
+    public ResponseEntity<CategoryResponseDTO> update(@RequestBody @Valid CategoryRequestDTO dto, @PathVariable String categoryId) {
+        Category category = categoryService.update(dto, categoryId);
+        CategoryResponseDTO response = new CategoryResponseDTO(category);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
     @Operation(summary = "Delete category by id")
     @DeleteMapping(value = "/{categoryId}")
     public ResponseEntity<Void> delete(@PathVariable String categoryId) {

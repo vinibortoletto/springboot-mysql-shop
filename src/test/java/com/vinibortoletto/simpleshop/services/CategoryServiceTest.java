@@ -105,6 +105,43 @@ class CategoryServiceTest {
     }
 
     @Test
+    @DisplayName("update - should throw exception if trying to duplicate category")
+    void updateCase1() {
+        String id = String.valueOf(UUID.randomUUID());
+        Category duplicateCategory = categoryFaker.createFakeCategory();
+        CategoryRequestDTO dto = categoryFaker.createFakeCategoryRequestDTO();
+
+        Category newCategory = new Category();
+        BeanUtils.copyProperties(dto, newCategory);
+
+        when(categoryRepository.findByName(dto.name())).thenReturn(Optional.of(duplicateCategory));
+
+        assertThrows(ConflictException.class, () -> categoryService.update(dto, id));
+        verify(categoryRepository, times(1)).findByName(dto.name());
+        verify(categoryRepository, never()).save(newCategory);
+    }
+
+    @Test
+    @DisplayName("update - should update category")
+    void updateCase2() {
+        String id = String.valueOf(UUID.randomUUID());
+        CategoryRequestDTO dto = categoryFaker.createFakeCategoryRequestDTO();
+
+        Category newCategory = new Category();
+        BeanUtils.copyProperties(dto, newCategory);
+
+        when(categoryRepository.findByName(dto.name())).thenReturn(Optional.empty());
+        when(categoryRepository.findById(id)).thenReturn(Optional.of(newCategory));
+        when(categoryRepository.save(newCategory)).thenReturn(newCategory);
+
+        Category savedCategory = categoryService.update(dto, id);
+
+        verify(categoryRepository, times(1)).findByName(dto.name());
+        verify(categoryRepository, times(1)).save(newCategory);
+        assertEquals(newCategory, savedCategory);
+    }
+
+    @Test
     @DisplayName("delete - should throw exception if category was not found")
     void deleteCase1() {
         String id = String.valueOf(UUID.randomUUID());

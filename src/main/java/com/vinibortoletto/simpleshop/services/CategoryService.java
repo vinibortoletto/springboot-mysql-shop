@@ -41,6 +41,19 @@ public class CategoryService {
         return categoryRepository.save(newCategory);
     }
 
+    public Category update(CategoryRequestDTO dto, String id) {
+        Optional<Category> duplicateCategory = categoryRepository.findByName(dto.name());
+
+        if (duplicateCategory.isPresent()) {
+            throw new ConflictException("Category with provided name already exists");
+        }
+
+        Category newCategory = findById(id);
+        newCategory.setName(dto.name());
+
+        return categoryRepository.save(newCategory);
+    }
+
     public void delete(String categoryId) {
         findById(categoryId);
 
