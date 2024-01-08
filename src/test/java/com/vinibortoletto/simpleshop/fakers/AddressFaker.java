@@ -1,6 +1,7 @@
 package com.vinibortoletto.simpleshop.fakers;
 
 import com.github.javafaker.Faker;
+import com.vinibortoletto.simpleshop.dtos.address.AddressRequestDTO;
 import com.vinibortoletto.simpleshop.models.Address;
 
 import java.util.UUID;
@@ -23,15 +24,16 @@ public class AddressFaker {
         return fakeAddress;
     }
 
-//    public AddressDto createFakeAddressDto() {
-//        return new AddressDto(
-//                faker.address().streetAddress(),
-//                faker.number().digit(),
-//                faker.address().zipCode(),
-//                faker.name().fullName(),
-//                faker.address().city(),
-//                faker.address().state(),
-//                faker.address().country()
-//        );
-//    }
+    public AddressRequestDTO createFakeAddressRequestDTO() {
+        return new AddressRequestDTO(
+            faker.address().streetAddress(),
+            faker.number().digit(),
+            faker.address().zipCode(),
+            faker.name().fullName(),
+            faker.address().city(),
+            faker.address().state(),
+            faker.address().country(),
+            String.valueOf(UUID.randomUUID())
+        );
+    }
 }
