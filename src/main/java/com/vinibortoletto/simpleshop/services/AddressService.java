@@ -28,12 +28,7 @@ public class AddressService {
 
     public Address findById(String id) {
         Optional<Address> address = addressRepository.findById(id);
-
-        if (address.isEmpty()) {
-            throw new NotFoundException("Address not found");
-        }
-
-        return address.get();
+        return address.orElseThrow(() -> new NotFoundException("Address not found"));
     }
 
     public Address save(AddressRequestDTO dto) {
@@ -42,6 +37,7 @@ public class AddressService {
 
         if (address.isPresent()) {
             boolean customerHasAddress = customer.getAddresses().contains(address.get());
+
 
             if (customerHasAddress) {
                 throw new ConflictException("Address already registered by customer");
