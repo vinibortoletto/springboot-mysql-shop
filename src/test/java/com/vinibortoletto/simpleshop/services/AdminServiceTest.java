@@ -2,6 +2,7 @@ package com.vinibortoletto.simpleshop.services;
 
 import com.vinibortoletto.simpleshop.dtos.admin.AdminRequestDTO;
 import com.vinibortoletto.simpleshop.enums.Role;
+import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.fakers.AdminFaker;
 import com.vinibortoletto.simpleshop.fakers.UserFaker;
@@ -15,6 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -146,5 +148,17 @@ class AdminServiceTest {
 
         verify(adminRepository, times(1)).findById(id);
         verify(adminRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("delete - should throw DataIntegrityViolationException if admin is in use")
+    void deleteCase3() {
+        String id = String.valueOf(UUID.randomUUID());
+        Admin admin = adminFaker.createFakeAdmin();
+
+        when(adminRepository.findById(id)).thenReturn(Optional.of(admin));
+        doThrow(DataIntegrityViolationException.class).when(adminRepository).deleteById(id);
+
+        assertThrows(DatabaseException.class, () -> adminService.delete(id));
     }
 }

@@ -3,6 +3,7 @@ package com.vinibortoletto.simpleshop.services;
 import com.vinibortoletto.simpleshop.dtos.user.UserRequestDTO;
 import com.vinibortoletto.simpleshop.enums.Role;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
+import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.fakers.AddressFaker;
 import com.vinibortoletto.simpleshop.fakers.CartFaker;
@@ -17,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -227,5 +229,17 @@ class UserServiceTest {
 
         verify(userRepository, times(1)).findById(id);
         verify(userRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("delete - should throw DataIntegrityViolationException if user is in use")
+    void deleteCase3() {
+        String id = String.valueOf(UUID.randomUUID());
+        User user = userFaker.createFakeUser(Role.CUSTOMER);
+
+        when(userRepository.findById(id)).thenReturn(Optional.of(user));
+        doThrow(DataIntegrityViolationException.class).when(userRepository).deleteById(id);
+
+        assertThrows(DatabaseException.class, () -> userService.delete(id));
     }
 }

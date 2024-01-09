@@ -2,6 +2,7 @@ package com.vinibortoletto.simpleshop.services;
 
 import com.vinibortoletto.simpleshop.dtos.product.ProductRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
+import com.vinibortoletto.simpleshop.exceptions.DatabaseException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
 import com.vinibortoletto.simpleshop.fakers.ProductFaker;
 import com.vinibortoletto.simpleshop.models.Category;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
@@ -184,5 +186,17 @@ class ProductServiceTest {
 
         verify(productRepository, times(1)).findById(id);
         verify(productRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    @DisplayName("delete - should throw DataIntegrityViolationException if product is in use")
+    void deleteCase3() {
+        String id = String.valueOf(UUID.randomUUID());
+        Product product = productFaker.createFakeProduct();
+
+        when(productRepository.findById(id)).thenReturn(Optional.of(product));
+        doThrow(DataIntegrityViolationException.class).when(productRepository).deleteById(id);
+
+        assertThrows(DatabaseException.class, () -> productService.delete(id));
     }
 }
