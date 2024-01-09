@@ -61,7 +61,6 @@ public class CartService {
 
         validateCustomerCart(customer, cart);
 
-
         for (CartProductRequestDTO cartProductRequestDTO : dto.products()) {
             CartProduct cartProduct = new CartProduct();
             Product product = productService.findById(cartProductRequestDTO.id());
