@@ -3,7 +3,6 @@ package com.vinibortoletto.simpleshop.services;
 import com.vinibortoletto.simpleshop.dtos.product.ProductRequestDTO;
 import com.vinibortoletto.simpleshop.exceptions.ConflictException;
 import com.vinibortoletto.simpleshop.exceptions.NotFoundException;
-import com.vinibortoletto.simpleshop.fakers.CategoryFaker;
 import com.vinibortoletto.simpleshop.fakers.ProductFaker;
 import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.models.Product;
@@ -15,10 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,41 +23,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 class ProductServiceTest {
 
     private final ProductFaker productFaker = new ProductFaker();
-    private final CategoryFaker categoryFaker = new CategoryFaker();
 
     @Mock
     private ProductRepository productRepository;
 
-    @Autowired
-    @InjectMocks
-    private ProductService productService;
-
     @Mock
     private CategoryService categoryService;
+
+    @InjectMocks
+    private ProductService productService;
 
     @BeforeEach
     void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
-
     @Test
-    @DisplayName("findAll - should return empty array")
+    @DisplayName("findAll - should return all products")
     void findAllCase1() {
-        List<Product> productList = new ArrayList<>();
-        when(productRepository.findAll()).thenReturn(productList);
-
-        List<Product> foundProductList = productService.findAll();
-        assertEquals(productList, foundProductList);
-    }
-
-    @Test
-    @DisplayName("findAll - should find all products")
-    void findAllCase2() {
         List<Product> productList = List.of(
             productFaker.createFakeProduct(),
             productFaker.createFakeProduct(),
@@ -71,7 +53,9 @@ class ProductServiceTest {
         when(productRepository.findAll()).thenReturn(productList);
 
         List<Product> foundProductList = productService.findAll();
+
         assertEquals(productList, foundProductList);
+        verify(productRepository, times(1)).findAll();
     }
 
     @Test
