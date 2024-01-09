@@ -29,13 +29,6 @@ public class CartService {
     @Autowired
     private ProductService productService;
 
-    public Cart save(Customer customer) {
-        Cart cart = new Cart();
-        cart.setCustomer(customer);
-        return cartRepository.save(cart);
-    }
-
-
     public List<Cart> findAll() {
         return cartRepository.findAll();
     }
@@ -45,10 +38,15 @@ public class CartService {
         return cart.orElseThrow(() -> new NotFoundException("Cart not found"));
     }
 
-
     public Cart findByCustomerId(String customerId) {
         Optional<Cart> cart = cartRepository.findByCustomerId(customerId);
         return cart.orElseThrow(() -> new NotFoundException("Cart not found"));
+    }
+
+    public Cart save(Customer customer) {
+        Cart cart = new Cart();
+        cart.setCustomer(customer);
+        return cartRepository.save(cart);
     }
 
     public void validateCustomerCart(Customer customer, Cart cart) {
