@@ -1,9 +1,11 @@
 package com.vinibortoletto.simpleshop.fakers;
 
 import com.github.javafaker.Faker;
+import com.vinibortoletto.simpleshop.dtos.cart.CartRequestDTO;
 import com.vinibortoletto.simpleshop.models.Cart;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.UUID;
 
 public class CartFaker {
@@ -18,15 +20,10 @@ public class CartFaker {
         return fakeCart;
     }
 
-//    public CartDto createFakeCartDto() {
-//        return new CartDto(
-//                faker.address().streetCart(),
-//                faker.number().digit(),
-//                faker.address().zipCode(),
-//                faker.name().fullName(),
-//                faker.address().city(),
-//                faker.address().state(),
-//                faker.address().country()
-//        );
-//    }
+    public CartRequestDTO createFakeCartRequestDTO() {
+        return new CartRequestDTO(
+            String.valueOf(UUID.randomUUID()),
+            new HashSet<>()
+        );
+    }
 }
