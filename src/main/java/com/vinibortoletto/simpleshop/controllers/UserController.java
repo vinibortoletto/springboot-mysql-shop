@@ -1,11 +1,11 @@
 package com.vinibortoletto.simpleshop.controllers;
 
+import com.vinibortoletto.simpleshop.config.security.TokenService;
 import com.vinibortoletto.simpleshop.dtos.user.AuthenticationRequestDTO;
 import com.vinibortoletto.simpleshop.dtos.user.AuthenticationResponseDTO;
 import com.vinibortoletto.simpleshop.dtos.user.UserRequestDTO;
 import com.vinibortoletto.simpleshop.dtos.user.UserResponseDTO;
 import com.vinibortoletto.simpleshop.models.User;
-import com.vinibortoletto.simpleshop.security.TokenService;
 import com.vinibortoletto.simpleshop.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

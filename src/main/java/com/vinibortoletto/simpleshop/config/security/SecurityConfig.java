@@ -1,4 +1,4 @@
-package com.vinibortoletto.simpleshop.security;
+package com.vinibortoletto.simpleshop.config.security;
 
 import com.vinibortoletto.simpleshop.enums.Role;
 import com.vinibortoletto.simpleshop.services.UserService;
@@ -23,7 +23,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration {
+public class SecurityConfig {
     private static final RequestMatcher[] WHITE_LIST = {
         new AntPathRequestMatcher("/swagger-ui/**"),
         new AntPathRequestMatcher("/swagger-ui.html"),
