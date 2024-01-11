@@ -35,16 +35,27 @@ public class SecurityConfiguration {
 
     private static final RequestMatcher[] ADMIN_LIST = {
         new AntPathRequestMatcher("/users", HttpMethod.GET.name()),
-    };
 
-    private static final RequestMatcher[] ADMIN_CUSTOMER_LIST = {
-        new AntPathRequestMatcher("/users/{id}", HttpMethod.GET.name()),
-        new AntPathRequestMatcher("/users/{id}", HttpMethod.PUT.name()),
-        new AntPathRequestMatcher("/users/{id}", HttpMethod.DELETE.name()),
+        new AntPathRequestMatcher("/products", HttpMethod.PUT.name()),
+        new AntPathRequestMatcher("/products", HttpMethod.POST.name()),
+        new AntPathRequestMatcher("/products", HttpMethod.DELETE.name()),
 
-        new AntPathRequestMatcher("/addresses/**", HttpMethod.GET.name()),
-        new AntPathRequestMatcher("/addresses", HttpMethod.POST.name()),
-        new AntPathRequestMatcher("/addresses/{addressId}", HttpMethod.PUT.name()),
+        new AntPathRequestMatcher("/orders/status", HttpMethod.PUT.name()),
+
+        new AntPathRequestMatcher("/categories/**", HttpMethod.GET.name()),
+        new AntPathRequestMatcher("/categories", HttpMethod.POST.name()),
+        new AntPathRequestMatcher("/categories/**", HttpMethod.PUT.name()),
+        new AntPathRequestMatcher("/categories/**", HttpMethod.DELETE.name()),
+
+        new AntPathRequestMatcher("/carts", HttpMethod.GET.name()),
+        new AntPathRequestMatcher("/carts/**", HttpMethod.PUT.name()),
+
+        new AntPathRequestMatcher("/carts/**", HttpMethod.PUT.name()),
+
+        new AntPathRequestMatcher("/addresses", HttpMethod.GET.name()),
+
+        new AntPathRequestMatcher("/customers", HttpMethod.GET.name()),
+        new AntPathRequestMatcher("/admins", HttpMethod.GET.name()),
 
     };
 
@@ -62,10 +73,6 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(WHITE_LIST).permitAll()
                 .requestMatchers(ADMIN_LIST).hasRole(Role.ADMIN.getRole())
-                .requestMatchers(ADMIN_CUSTOMER_LIST).hasAnyRole(
-                    Role.ADMIN.getRole(),
-                    Role.CUSTOMER.getRole()
-                )
                 .anyRequest().authenticated()
             )
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
