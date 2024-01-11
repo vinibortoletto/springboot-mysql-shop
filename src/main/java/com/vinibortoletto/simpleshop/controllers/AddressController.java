@@ -41,6 +41,15 @@ public class AddressController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Returns all addresses based on the customer id")
+    @GetMapping(value = "/customer/{customerId}")
+    public ResponseEntity<List<AddressResponseDTO>> findAllByCustomerId(@PathVariable String customerId) {
+        List<Address> addressList = addressService.findAllByCustomerId(customerId);
+        List<AddressResponseDTO> response = AddressResponseDTO.convert(addressList);
+
+        return ResponseEntity.ok().body(response);
+    }
+
     @Operation(summary = "Creates a new address for user")
     @PostMapping
     public ResponseEntity<AddressResponseDTO> save(@RequestBody @Valid AddressRequestDTO dto) {

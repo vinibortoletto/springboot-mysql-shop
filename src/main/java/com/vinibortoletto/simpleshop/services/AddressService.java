@@ -31,6 +31,11 @@ public class AddressService {
         return address.orElseThrow(() -> new NotFoundException("Address not found"));
     }
 
+    public List<Address> findAllByCustomerId(String customerId) {
+        Customer customer = customerService.findById(customerId);
+        return customer.getAddresses();
+    }
+
     public Address save(AddressRequestDTO dto) {
         Optional<Address> address = addressRepository.findByZipcodeAndNumber(dto.zipcode(), dto.number());
         Customer customer = customerService.findById(dto.customerId());
