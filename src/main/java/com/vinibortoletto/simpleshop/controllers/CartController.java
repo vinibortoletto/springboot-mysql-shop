@@ -32,6 +32,15 @@ public class CartController {
         return ResponseEntity.ok().body(response);
     }
 
+    @Operation(summary = "Find cart by customer id")
+    @GetMapping(value = "/customer/{customerId}")
+    public ResponseEntity<CartResponseDTO> findByCustomerId(@PathVariable String customerId) {
+        Cart cart = cartService.findByCustomerId(customerId);
+        CartResponseDTO response = new CartResponseDTO(cart);
+
+        return ResponseEntity.ok().body(response);
+    }
+
     @Operation(summary = "Add product to cart")
     @PutMapping(value = "/{cartId}")
     public ResponseEntity<CartResponseDTO> update(
