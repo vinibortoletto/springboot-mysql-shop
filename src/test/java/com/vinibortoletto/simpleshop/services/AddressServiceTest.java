@@ -92,6 +92,20 @@ class AddressServiceTest {
     }
 
     @Test
+    @DisplayName("findAllByCustomerId - should return all addresses by customer id")
+    void findAllByCustomerIdCase1() {
+        Customer customer = userFaker.createFakeUser(Role.CUSTOMER).getCustomer();
+        List<Address> addressList = customer.getAddresses();
+
+        when(customerService.findById(customer.getId())).thenReturn(customer);
+
+        List<Address> foundAddressList = addressService.findAllByCustomerId(customer.getId());
+
+        assertEquals(addressList, foundAddressList);
+        verify(customerService, times(1)).findById(customer.getId());
+    }
+
+    @Test
     @DisplayName("save - should throw exception if address was already registered by customer")
     void saveCase1() {
         AddressRequestDTO dto = addressFaker.createFakeAddressRequestDTO();
