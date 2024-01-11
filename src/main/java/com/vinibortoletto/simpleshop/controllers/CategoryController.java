@@ -5,7 +5,6 @@ import com.vinibortoletto.simpleshop.dtos.category.CategoryResponseDTO;
 import com.vinibortoletto.simpleshop.models.Category;
 import com.vinibortoletto.simpleshop.services.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "categories")
 @RestController
 @RequestMapping(value = "categories")

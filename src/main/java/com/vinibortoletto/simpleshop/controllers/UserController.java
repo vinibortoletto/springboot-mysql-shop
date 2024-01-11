@@ -8,7 +8,6 @@ import com.vinibortoletto.simpleshop.models.User;
 import com.vinibortoletto.simpleshop.security.TokenService;
 import com.vinibortoletto.simpleshop.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ public class UserController {
     @Autowired
     private TokenService tokenService;
 
-    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Returns all users")
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> findAll() {
@@ -43,7 +41,6 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Returns a user based on its id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
@@ -62,7 +59,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Updates a user based on its id")
     @PutMapping(value = "/{id}")
     public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO dto, @PathVariable String id) {
@@ -72,8 +68,6 @@ public class UserController {
         return ResponseEntity.ok().body(response);
     }
 
-    @SecurityRequirement(name = "Bearer Authentication")
-    @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Deletes a user based on its id")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) {
