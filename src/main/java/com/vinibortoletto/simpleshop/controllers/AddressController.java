@@ -52,7 +52,7 @@ public class AddressController {
 
 
     @Operation(summary = "Updates an user address")
-    @PutMapping(name = "/{addressId}")
+    @PutMapping(value = "/{addressId}")
     public ResponseEntity<AddressResponseDTO> update(@RequestBody @Valid AddressRequestDTO dto, String addressId) {
         Address address = addressService.update(dto, addressId);
         AddressResponseDTO response = new AddressResponseDTO(address);
