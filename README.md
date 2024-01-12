@@ -24,8 +24,7 @@ This project was created with the following technologies:
 - Java Faker
 - Swagger
 
+
  **Endpoints**
- 
-|  Path |  Method | Description |
-|----------|--------------|--------------|
-|`addresses`| GET | Get all addresses |
+
+ <img src="https://i.imgur.com/zdbAC7V.png" alt="" />
