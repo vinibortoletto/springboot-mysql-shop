@@ -1,17 +1,8 @@
-<div align="center">
-  <h1>SpringBoot/MySQL Shop</h1>
-  This user-friendly interface facilitates seamless product browsing, efficient cart management, and secure user authentication.
-</div>
+# Simple Shop API
+A simple e-commerce API where its possible to manage users, addresses, products, carts and orders.
 
-<hr />
-
-## :writing_hand: About
-
-A simple ecommerce API where its possible to manage users and addresses, products, cart and orders.
-
-## :rocket: Tecnologies
-
-This project was created with the following technologies:
+## Tools
+This project was created with the following tools:
 
 - Java
 - SpringBoot
@@ -25,6 +16,6 @@ This project was created with the following technologies:
 - Swagger
 
 
- **Endpoints**
+ ## Endpoints
 
  <img src="https://i.imgur.com/zdbAC7V.png" alt="" />
