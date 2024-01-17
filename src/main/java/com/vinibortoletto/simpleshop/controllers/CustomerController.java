@@ -31,9 +31,9 @@ public class CustomerController {
     }
 
     @Operation(summary = "Returns a customer based on its id")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<CustomerResponseDTO> findById(@PathVariable String id) {
-        Customer customer = service.findById(id);
+    @GetMapping(value = "/{customerId}")
+    public ResponseEntity<CustomerResponseDTO> findById(@PathVariable String customerId) {
+        Customer customer = service.findById(customerId);
         CustomerResponseDTO response = new CustomerResponseDTO(customer);
 
         return ResponseEntity.ok().body(response);

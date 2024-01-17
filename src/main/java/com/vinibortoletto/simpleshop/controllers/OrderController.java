@@ -41,9 +41,9 @@ public class OrderController {
     }
 
     @Operation(summary = "Finds an order by id")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Order> findById(@PathVariable String id) {
-        return ResponseEntity.ok().body(orderService.findById(id));
+    @GetMapping(value = "/{orderId}")
+    public ResponseEntity<Order> findById(@PathVariable String orderId) {
+        return ResponseEntity.ok().body(orderService.findById(orderId));
     }
 
     @Operation(summary = "Updates an order status")

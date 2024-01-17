@@ -42,9 +42,9 @@ public class UserController {
     }
 
     @Operation(summary = "Returns a user based on its id")
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
-        User user = userService.findById(id);
+    @GetMapping(value = "/{userId}")
+    public ResponseEntity<UserResponseDTO> findById(@PathVariable String userId) {
+        User user = userService.findById(userId);
         UserResponseDTO response = new UserResponseDTO(user);
 
         return ResponseEntity.ok().body(response);
@@ -60,18 +60,18 @@ public class UserController {
     }
 
     @Operation(summary = "Updates a user based on its id")
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO dto, @PathVariable String id) {
-        User user = userService.update(dto, id);
+    @PutMapping(value = "/{userId}")
+    public ResponseEntity<UserResponseDTO> update(@RequestBody @Valid UserRequestDTO dto, @PathVariable String userId) {
+        User user = userService.update(dto, userId);
         UserResponseDTO response = new UserResponseDTO(user);
 
         return ResponseEntity.ok().body(response);
     }
 
     @Operation(summary = "Deletes a user based on its id")
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
-        userService.delete(id);
+    @DeleteMapping(value = "/{userId}")
+    public ResponseEntity<Void> delete(@PathVariable String userId) {
+        userService.delete(userId);
         return ResponseEntity.noContent().build();
     }
 
