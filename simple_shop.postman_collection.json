@@ -1,0 +1,1164 @@
+{
+	"info": {
+		"_postman_id": "bed8129a-1b13-439e-a173-a54d6bc1978b",
+		"name": "simple_shop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8883720"
+	},
+	"item": [
+		{
+			"name": "products",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/3c9d07d1-f5bc-4596-aca1-4ca1e006580a",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"3c9d07d1-f5bc-4596-aca1-4ca1e006580a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllByCategoryId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/categories/a9fff1d3-bec3-4736-9ef3-4016273241ea",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"categories",
+								"a9fff1d3-bec3-4736-9ef3-4016273241ea"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Red Shoes\",\r\n    \"price\": 29.99,\r\n    \"stock\": 200,\r\n    \"image\": \"https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\r\n    \"description\": \"Introducing our Red Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes.\",\r\n    \"categories\": [\"0fd13a48-f339-4966-bf3f-f4e13c8a189e\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/products",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "categories",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Blue Shoes\",\r\n    \"price\": 29.99,\r\n    \"stock\": 200,\r\n    \"image\": \"https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\r\n    \"description\": \"Introducing our Blue Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes.\",\r\n    \"categories\": [\"a9fff1d3-bec3-4736-9ef3-4016273241ea\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/08efd0b9-d826-45b3-acc6-2be49217cdb0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"08efd0b9-d826-45b3-acc6-2be49217cdb0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Shoes\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pants\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories/08efd0b9-d826-45b3-acc6-2be49217cdb0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"08efd0b9-d826-45b3-acc6-2be49217cdb0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/products/{id}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"products",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findAllCustomerId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/customers/5fef16b9-fc9b-4878-b09a-48efe4652933",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"customers",
+								"5fef16b9-fc9b-4878-b09a-48efe4652933"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"5fef16b9-fc9b-4878-b09a-48efe4652933\",\r\n    \"shippingAddressId\": \"98df2656-b7bd-4eee-8e70-5bc618b1780b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/orders/48bf4f11-4600-43f2-b8f8-01add38a9f4c",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"48bf4f11-4600-43f2-b8f8-01add38a9f4c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateStatus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\": \"\",\r\n    \"orderStatus\": \"DELIVERED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/orders/status",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"orders",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/0d83acbd-16be-47b2-ad68-80ad685cad16",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"0d83acbd-16be-47b2-ad68-80ad685cad16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Opa 2\",\r\n    \"email\": \"opa2@example.com\",\r\n    \"password\": \"123123\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedroaa Bortoletto\",\r\n    \"email\": \"pedrobortoletto@gmail.com\",\r\n    \"phone\": \"1934346762\",\r\n    \"password\": \"123123\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Blue Shoes\",\r\n    \"price\": 29.99,\r\n    \"stock\": 200,\r\n    \"image\": \"https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\r\n    \"description\": \"Introducing our Blue Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes.\",\r\n    \"categories\": [\"a9fff1d3-bec3-4736-9ef3-4016273241ea\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedro Bortoletto\",\r\n    \"email\": \"pedrobortoletto@gmail.com\",\r\n    \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedro Bortoletto\",\r\n    \"email\": \"pedrobortoletto@gmail.com\",\r\n    \"phone\": \"1934346762\",\r\n    \"password\": \"123123\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admins",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Blue Shoes\",\r\n    \"price\": 29.99,\r\n    \"stock\": 200,\r\n    \"image\": \"https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\r\n    \"description\": \"Introducing our Blue Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes.\",\r\n    \"categories\": [\"a9fff1d3-bec3-4736-9ef3-4016273241ea\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedro Bortoletto\",\r\n    \"email\": \"pedrobortoletto@gmail.com\",\r\n    \"password\": \"123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/customers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedro Bortoletto\",\r\n    \"email\": \"pedrobortoletto@gmail.com\",\r\n    \"phone\": \"1934346762\",\r\n    \"password\": \"123123\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "addresses",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Blue Shoes\",\r\n    \"price\": 29.99,\r\n    \"stock\": 200,\r\n    \"image\": \"https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\r\n    \"description\": \"Introducing our Blue Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes.\",\r\n    \"categories\": [\"a9fff1d3-bec3-4736-9ef3-4016273241ea\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/addresses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/addresses/48b93991-f44d-4d2e-b724-2d2cf6d75869",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"addresses",
+								"48b93991-f44d-4d2e-b724-2d2cf6d75869"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "save",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"street\": \"123 Main St\",\r\n    \"number\": \"456\",\r\n    \"zipcode\": \"12345\",\r\n    \"neighborhood\": \"Sunnyville\",\r\n    \"city\": \"Metropolis\",\r\n    \"state\": \"ABC\",\r\n    \"country\": \"XYZ\",\r\n    \"customerId\": \"46cdffaa-ada2-4174-9548-a829c4edd581\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/addresses",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedro Bortoletto\",\r\n    \"email\": \"pedrobortoletto@gmail.com\",\r\n    \"phone\": \"1934346762\",\r\n    \"password\": \"123123\",\r\n    \"role\": \"CUSTOMER\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carts",
+			"item": [
+				{
+					"name": "findAll",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Blue Shoes\",\r\n    \"price\": 29.99,\r\n    \"stock\": 200,\r\n    \"image\": \"https://images.pexels.com/photos/1619652/pexels-photo-1619652.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1\",\r\n    \"description\": \"Introducing our Blue Harmony Shoes, a stylish and eco-friendly footwear choice for the environmentally conscious individual. These sleek and comfortable shoes are designed with a vibrant shade of green, adding a touch of nature-inspired flair to your wardrobe. Crafted from sustainable materials, Green Harmony Shoes not only make a fashion statement but also contribute to a greener planet. Step into a world of style and sustainability with these trendy green shoes that seamlessly blend fashion and environmental responsibility. Walk with purpose, walk in Green Harmony Shoes.\",\r\n    \"categories\": [\"a9fff1d3-bec3-4736-9ef3-4016273241ea\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/carts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": \"ca5cc4c9-0e04-4b8c-a3be-6e9f2e050148\",\r\n    \"products\": [\r\n        {\r\n            \"id\": \"3c9d07d1-f5bc-4596-aca1-4ca1e006580a\",\r\n            \"quantity\": 10\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/carts/cdd4ffcf-ef8e-4a24-9e3d-e333e159b7f2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"carts",
+								"cdd4ffcf-ef8e-4a24-9e3d-e333e159b7f2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/699ad267-854f-43b3-94f1-cca894d887bc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"699ad267-854f-43b3-94f1-cca894d887bc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhdXRoLWFwaSIsInN1YiI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzA1OTY2MTgwfQ.zPc6D6qFanYksn1Ml3b0jgjbTq_Lfgeulxwh02R7E3o",
+			"type": "string"
+		}
+	]
+}
