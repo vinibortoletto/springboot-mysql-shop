@@ -41,5 +41,75 @@ https://github.com/vinibortoletto/springboot-mysql-shop/blob/main/simple_shop.po
 
 
  ## Endpoints
+All requests with exception of `POST /users/login` and `POST /users` require an authentication token, which is generated after login.
 
- <img src="https://i.imgur.com/zdbAC7V.png" alt="" />
+#### Users
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `GET`  | `/users/{userId}`| Get user by id      |
+| `PUT`  | `/users/{userId}`| Update user by id   |
+| `DELETE`  | `/users/{userId}`| Delete user by id   |
+| `GET`  | `/users`| Get all users  |
+| `POST`  | `/users`| Create new user  |
+| `POST`  | `/users/login`| Validate user login  |
+
+#### Products
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `PUT`  | `/products/{productId}`| Update product by id      |
+| `GET`  | `/products`| Get all products   |
+| `POST`  | `/products`| Create new product   |
+| `GET`  | `/products/{productId}`| Get product by id   |
+| `DELETE`  | `/products/{productId}`| Delete product by id   |
+| `GET`  | `/products/categories/{categoryId}`| Get all products by cateogry id   |
+
+#### Orders
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `PUT`  | `/orders/status`| Update an order status      |
+| `GET`  | `/orders`| Get all orders      |
+| `POST`  | `/orders`| Create new order      |
+| `GET`  | `/orders/{orderId}`| Get order by id      |
+| `GET`  | `/orders/customer{customerId}`| Get all orders by user id      |
+
+#### Categories
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `GET`  | `/categories/{categoryId}`| Get category by id      |
+| `PUT`  | `/categories/{categoryId}`| Update category by id      |
+| `DELETE`  | `/categories/{categoryId}`| Delete category by id      |
+| `GET`  | `/categories`| Get all categories      |
+| `POST`  | `/categories`| Create new category      |
+
+#### Carts
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `PUT`  | `/carts/{cartId}`| Get cart by id      |
+| `GET`  | `/carts`| Get all carts      |
+| `GET`  | `/carts/customer/{customerId}`| Get cart by customer id      |
+
+#### Addresses
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `GET`  | `/addresses/{addressId}`| Get address by id      |
+| `PUT`  | `/addresses/{addressId}`| Update address by id      |
+| `GET`  | `/addresses`| Get all addresses      |
+| `POST`  | `/addresses`| Create new address      |
+| `GET`  | `/addresses/customer/{customerId}`| Get all addresses by customer id      |
+
+#### Customers
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `GET`  | `/customers`| Get all customers      |
+| `GET`  | `/customers/{customerId}`| Get customer by id      |
+
+#### Admins
+| Method | Path      | Description                |
+| :----  | :-------- | :------------------------- |
+| `GET`  | `/admins`| Get all admins      |
+
+
+
+
+
+<!-- <img src="https://i.imgur.com/zdbAC7V.png" alt="" /> -->
