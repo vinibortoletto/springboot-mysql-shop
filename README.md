@@ -108,6 +108,10 @@ All requests with exception of `POST /users/login` and `POST /users` require an 
 | :----  | :-------- | :------------------------- |
 | `GET`  | `/admins`| Get all admins      |
 
+## Database
+
+<img src="https://i.imgur.com/U4IulF5.png" alt="" />
+
 
 
 
